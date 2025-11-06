@@ -1,0 +1,7 @@
+- id: anylogic-export
+  name: Export AnyLogic model
+  description: "Export a standalone AnyLogic model"
+  entry: anylogic-export
+  language: system
+  # files: .*\.(alp|alpx)$Py
+  pass_filenames: false

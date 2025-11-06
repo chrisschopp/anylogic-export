@@ -1,0 +1,23 @@
+[project]
+name = "anylogic-export"
+version = "0.1.0"
+description = "Pre-commit hook for exporting AnyLogic standalone models to run in continuous integration."
+authors = [{ name = "Chris Schopp", email = "cschopp@simwell.io" }]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ruff>=0.11.8",
+    "pre-commit>=4.2.0",
+    "anylogic-export",
+    "watchfiles>=1.0.5",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv.sources]
+anylogic-export = { workspace = true }
+
+[project.scripts]
+anylogic-export = "anylogic_export.export:run"
