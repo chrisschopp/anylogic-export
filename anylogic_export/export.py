@@ -4,8 +4,6 @@ import logging
 import re
 import subprocess
 import sys
-from argparse import Namespace
-from logging import getLogger
 from pathlib import Path
 from typing import Any, Generator
 
@@ -13,7 +11,7 @@ from watchfiles import watch
 
 DEFAULT_PATH_TO_ANYLOGIC = "C:/Program Files/AnyLogic 8.9 Professional"
 
-logger = getLogger("export_anylogic_model")
+logger = logging.getLogger("export_anylogic_model")
 logFormatter = logging.Formatter("[%(levelname)s] %(message)s")
 consoleHandler = logging.StreamHandler()
 consoleHandler.setFormatter(logFormatter)
@@ -22,6 +20,19 @@ logger.setLevel(logging.DEBUG)
 
 
 def export_model(abs_path_to_model: str, anylogic_path: str) -> None:
+    if Path(abs_path_to_model).suffix not in {".alp", ".alpx"}:
+        raise ValueError(f"Path is not to an AnyLogic model file: {Path(abs_path_to_model)}")
+    for raw_path in (abs_path_to_model, anylogic_path):
+        path = Path(raw_path)
+        if not path.is_absolute():
+            raise ValueError(
+                f"{raw_path} is not an absolute path."
+                "You must provide the absolute path to the .alp/.alpx.\n"
+                "On Windows, this begins with the drive, e.g., 'c:/a/b'.\n"
+                "On macOS/Linux, this begins with the root '/a/b'"
+            )
+        if not path.exists():
+            raise ValueError(f"Path {raw_path} does not exist.")
     subprocess.run(
         ["anylogic", "-e", abs_path_to_model],
         cwd=anylogic_path,
@@ -58,7 +69,7 @@ def remove_chrome_reference(file_path: Path) -> None:
         sys.exit(1)
 
 
-def get_args() -> Namespace:
+def get_args() -> argparse.Namespace:
     """Get the arguments passed at the command line.
 
     Returns:
