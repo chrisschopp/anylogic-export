@@ -10,6 +10,7 @@ dependencies = [
     "pre-commit>=4.2.0",
     "anylogic-export",
     "watchfiles>=1.0.5",
+    "pytest>=8.4.2",
 ]
 
 [build-system]
@@ -21,3 +22,6 @@ anylogic-export = { workspace = true }
 
 [project.scripts]
 anylogic-export = "anylogic_export.export:run"
+
+[tool.pytest.ini_options]
+testpaths = ["."]

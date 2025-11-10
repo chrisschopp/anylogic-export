@@ -20,9 +20,8 @@ logger.setLevel(logging.DEBUG)
 
 
 def export_model(abs_path_to_model: str, anylogic_path: str) -> None:
-    if Path(abs_path_to_model).suffix not in {".alp", ".alpx"}:
-        raise ValueError(f"Path is not to an AnyLogic model file: {Path(abs_path_to_model)}")
-    for raw_path in (abs_path_to_model, anylogic_path):
+    abs_path_to_model = model_path(abs_path_to_model)
+    for raw_path in (anylogic_path,):
         path = Path(raw_path)
         if not path.is_absolute():
             raise ValueError(
@@ -31,13 +30,22 @@ def export_model(abs_path_to_model: str, anylogic_path: str) -> None:
                 "On Windows, this begins with the drive, e.g., 'c:/a/b'.\n"
                 "On macOS/Linux, this begins with the root '/a/b'"
             )
-        if not path.exists():
-            raise ValueError(f"Path {raw_path} does not exist.")
     subprocess.run(
         ["anylogic", "-e", abs_path_to_model],
         cwd=anylogic_path,
         shell=True,
     )
+
+
+def model_path(path_to_model: str) -> Path:
+    path = Path(path_to_model)
+    if Path(path).suffix not in {".alp", ".alpx"}:
+        raise ValueError(f"Path is not to an AnyLogic model file: {path}")
+    if not path.exists():
+        raise ValueError(f"Path {path} does not exist.")
+    if not path.is_absolute():
+        path = Path.cwd() / path
+    return path
 
 
 def remove_chrome_reference(file_path: Path) -> None:
