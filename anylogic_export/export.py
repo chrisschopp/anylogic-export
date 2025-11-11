@@ -19,9 +19,9 @@ logger.addHandler(consoleHandler)
 logger.setLevel(logging.DEBUG)
 
 
-def export_model(abs_path_to_model: str, anylogic_path: str) -> None:
-    abs_path_to_model = model_path(abs_path_to_model)
-    for raw_path in (anylogic_path,):
+def export_model(path_to_model: str, anylogic_dir: str) -> None:
+    path_to_model = model_path(path_to_model)
+    for raw_path in (anylogic_dir,):
         path = Path(raw_path)
         if not path.is_absolute():
             raise ValueError(
@@ -31,8 +31,8 @@ def export_model(abs_path_to_model: str, anylogic_path: str) -> None:
                 "On macOS/Linux, this begins with the root '/a/b'"
             )
     subprocess.run(
-        ["anylogic", "-e", abs_path_to_model],
-        cwd=anylogic_path,
+        ["anylogic", "-e", path_to_model],
+        cwd=anylogic_dir,
         shell=True,
     )
 
@@ -90,7 +90,7 @@ def get_args() -> argparse.Namespace:
         help="Absolute path to the .alp/.alpx file",
     )
     parser.add_argument(
-        "--anylogic_path",
+        "--anylogic_dir",
         type=Path,
         default=DEFAULT_PATH_TO_ANYLOGIC,
         help="Absolute path to AnyLogic.exe. (default: %(default)s)",
@@ -209,8 +209,8 @@ def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
 
 
 def run() -> None:
-    args: Namespace = get_args()
-    export_model(args.abs_path_to_model, args.anylogic_path)
+    args: argparse.Namespace = get_args()
+    export_model(args.abs_path_to_model, args.anylogic_dir)
     remove_chrome_refs_when_files_modified(args.abs_path_to_model, args.experiments)
 
 
