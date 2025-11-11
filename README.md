@@ -9,5 +9,5 @@ anylogic-export -h
 Export an AnyLogic model.
 
 ```bash
-anylogic-export /d:/repos/anylogic-export/DistributionCenter/DistributionCenter.alpx
+anylogic-export DistributionCenter/DistributionCenter.alpx
 ```

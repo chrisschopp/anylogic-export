@@ -24,4 +24,8 @@ anylogic-export = { workspace = true }
 anylogic-export = "anylogic_export.export:run"
 
 [tool.pytest.ini_options]
+
 testpaths = ["."]
+
+[tool.setuptools.packages.find]
+include = ["anylogic_export"]
