@@ -20,19 +20,27 @@ name = "anylogic-export"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "watchfiles" },
+]
+
+[package.dev-dependencies]
+dev = [
     { name = "pre-commit" },
     { name = "pytest" },
     { name = "ruff" },
-    { name = "watchfiles" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "anylogic-export", editable = "." },
+    { name = "watchfiles", specifier = ">=1.0.5" },
+]
+
+[package.metadata.requires-dev]
+dev = [
     { name = "pre-commit", specifier = ">=4.2.0" },
     { name = "pytest", specifier = ">=8.4.2" },
     { name = "ruff", specifier = ">=0.11.8" },
-    { name = "watchfiles", specifier = ">=1.0.5" },
 ]
 
 [[package]]
