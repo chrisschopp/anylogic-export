@@ -48,6 +48,15 @@ def model_path(path_to_model: str) -> Path:
     return path
 
 
+def validated_anylogic_dir(anylogic_dir: str) -> Path:
+    path = Path(anylogic_dir)
+    if not path.exists():
+        raise ValueError(f"Path to AnyLogic directory {path} does not exist.")
+    if not (path / "AnyLogic.exe").exists():
+        raise ValueError(f"Path to AnyLogic directory {path} does not contain `AnyLogic.exe`.")
+    return path
+
+
 def remove_chrome_reference(file_path: Path) -> None:
     """Remove a reference to `chrome` that will fail in the CI environment since
     `chromium/` is ignored by Git. Chrome isn't needed for a headless experiment anyways.
