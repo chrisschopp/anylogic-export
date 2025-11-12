@@ -52,6 +52,8 @@ Thumbs.db
 
 build/
 
+*.swp
 # Example model for testing
+DistributionCenter/*
+# Exported model folders
 DistributionCenter_*/
-!*_CustomExperiment/
