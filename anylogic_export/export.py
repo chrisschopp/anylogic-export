@@ -9,7 +9,7 @@ from typing import Any, Generator
 
 from watchfiles import watch
 
-DEFAULT_PATH_TO_ANYLOGIC = "C:/Program Files/AnyLogic 8.9 Professional"
+DEFAULT_PATH_TO_ANYLOGIC = Path("C:/Program Files/AnyLogic 8.9 Professional")
 
 logger = logging.getLogger("export_anylogic_model")
 logFormatter = logging.Formatter("[%(levelname)s] %(message)s")
@@ -53,7 +53,9 @@ def validated_anylogic_dir(anylogic_dir: str) -> Path:
     if not path.exists():
         raise ValueError(f"Path to AnyLogic directory {path} does not exist.")
     if not (path / "AnyLogic.exe").exists():
-        raise ValueError(f"Path to AnyLogic directory {path} does not contain `AnyLogic.exe`.")
+        raise ValueError(
+            f"Path to AnyLogic directory {path} does not contain `AnyLogic.exe`."
+        )
     return path
 
 
