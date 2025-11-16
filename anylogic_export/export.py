@@ -221,8 +221,10 @@ def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
 
 def run() -> None:
     args: argparse.Namespace = get_args()
-    export_model(args.abs_path_to_model, args.anylogic_dir)
-    remove_chrome_refs_when_files_modified(args.abs_path_to_model, args.experiments)
+    abs_path_to_model = model_path(args.abs_path_to_model)
+    anylogic_dir = validated_anylogic_dir(args.anylogic_dir)
+    export_model(abs_path_to_model, anylogic_dir)
+    remove_chrome_refs_when_files_modified(abs_path_to_model, args.experiments)
 
 
 if __name__ == "__main__":
