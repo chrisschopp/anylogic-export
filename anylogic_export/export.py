@@ -110,7 +110,7 @@ def get_args() -> argparse.Namespace:
         "--experiments",
         nargs="*",
         type=str,
-        default="Simulation",
+        default=["CustomExperiment"],
         help="Experiments to run in continuous integration. Note: all experiments are exported by AnyLogic.",
     )
     return parser.parse_args()
