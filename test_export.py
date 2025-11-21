@@ -23,14 +23,14 @@ def test_bad_path(path_to_model: str, tmp_path: Path) -> None:
 
 
 @pytest.mark.local
-@pytest.mark.parametrize("anylogic_dir", [export.DEFAULT_PATH_TO_ANYLOGIC])
+@pytest.mark.parametrize("anylogic_dir", [export.default_path_to_anylogic()])
 def test_good_anylogic_path(anylogic_dir: str) -> None:
     export.validated_anylogic_dir(anylogic_dir)
 
 
 @pytest.mark.local
 @pytest.mark.parametrize(
-    "anylogic_dir", [export.DEFAULT_PATH_TO_ANYLOGIC / "extra_dir"]
+    "anylogic_dir", [export.default_path_to_anylogic() / "extra_dir"]
 )
 def test_bad_anylogic_path(anylogic_dir: str) -> None:
     with pytest.raises(ValueError):

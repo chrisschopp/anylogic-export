@@ -6,10 +6,10 @@ import subprocess
 import sys
 from pathlib import Path
 from typing import Any, Generator
+import platform
 
 from watchfiles import watch
 
-DEFAULT_PATH_TO_ANYLOGIC = Path("C:/Program Files/AnyLogic 8.9 Professional")
 
 logger = logging.getLogger("export_anylogic_model")
 logFormatter = logging.Formatter("[%(levelname)s] %(message)s")
@@ -17,6 +17,15 @@ consoleHandler = logging.StreamHandler()
 consoleHandler.setFormatter(logFormatter)
 logger.addHandler(consoleHandler)
 logger.setLevel(logging.DEBUG)
+
+
+def default_path_to_anylogic() -> Path:
+    op_sys = platform.system()
+    match op_sys:
+        case "Windows":
+            return Path("C:/Program Files/AnyLogic 8.9 Professional")
+        case _:
+            return NotImplementedError
 
 
 def export_model(path_to_model: str, anylogic_dir: str) -> None:
@@ -103,7 +112,7 @@ def get_args() -> argparse.Namespace:
     parser.add_argument(
         "--anylogic_dir",
         type=Path,
-        default=DEFAULT_PATH_TO_ANYLOGIC,
+        default=default_path_to_anylogic(),
         help="Absolute path to AnyLogic.exe. (default: %(default)s)",
     )
     parser.add_argument(
