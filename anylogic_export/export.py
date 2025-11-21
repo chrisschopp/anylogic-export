@@ -16,7 +16,6 @@ logFormatter = logging.Formatter("[%(levelname)s] %(message)s")
 consoleHandler = logging.StreamHandler()
 consoleHandler.setFormatter(logFormatter)
 logger.addHandler(consoleHandler)
-logger.setLevel(logging.DEBUG)
 
 
 def default_path_to_anylogic() -> Path:
@@ -122,6 +121,9 @@ def get_args() -> argparse.Namespace:
         default=["CustomExperiment"],
         help="Experiments to run in continuous integration. Note: all experiments are exported by AnyLogic.",
     )
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-v", "--verbose", action="store_true", help="Show more output.")
+    group.add_argument("-s", "--silent", action="store_true", help="Supress all output except errors.")
     return parser.parse_args()
 
 
@@ -228,8 +230,18 @@ def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
                 sys.exit(0)
 
 
+def set_verbosity(args) -> None:
+    if args.silent:
+        logger.setLevel(logging.ERROR)
+    elif args.verbose:
+        logger.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.INFO)
+
+
 def run() -> None:
     args: argparse.Namespace = get_args()
+    set_verbosity(args)
     abs_path_to_model = model_path(args.abs_path_to_model)
     anylogic_dir = validated_anylogic_dir(args.anylogic_dir)
     export_model(abs_path_to_model, anylogic_dir)
