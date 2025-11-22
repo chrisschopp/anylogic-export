@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 from typing import Any, Generator
 import platform
+from textwrap import dedent
 
 from watchfiles import watch
 
@@ -103,13 +104,21 @@ def get_args() -> argparse.Namespace:
         Namespace: Contains the argument names as instance variables.
     """
     parser = argparse.ArgumentParser()
+
+    # Initialize continuous integration
+    subparsers = parser.add_subparsers(dest="command", help="Available commands")
+    init = subparsers.add_parser("init", help="Initialize continuous integration.")
+
+    # Export options
     parser.add_argument(
         "abs_path_to_model",
+        nargs="?",
         type=Path,
         help="Absolute path to the .alp/.alpx file",
     )
     parser.add_argument(
         "--anylogic_dir",
+        nargs="?",
         type=Path,
         default=default_path_to_anylogic(),
         help="Absolute path to AnyLogic.exe. (default: %(default)s)",
@@ -121,9 +130,15 @@ def get_args() -> argparse.Namespace:
         default=["CustomExperiment"],
         help="Experiments to run in continuous integration. Note: all experiments are exported by AnyLogic.",
     )
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument("-v", "--verbose", action="store_true", help="Show more output.")
-    group.add_argument("-s", "--silent", action="store_true", help="Supress all output except errors.")
+
+    # Set verbosity
+    verbosity = parser.add_mutually_exclusive_group()
+    verbosity.add_argument(
+        "-v", "--verbose", action="store_true", help="Show more output."
+    )
+    verbosity.add_argument(
+        "-s", "--silent", action="store_true", help="Suppress all output except errors."
+    )
     return parser.parse_args()
 
 
@@ -239,13 +254,28 @@ def set_verbosity(args) -> None:
         logger.setLevel(logging.INFO)
 
 
+def init_gitignore() -> None:
+    text = """
+        # Example model for testing
+        DistributionCenter/*
+        # Exported model folders
+        DistributionCenter_*/
+        DistributionCenter_*/*_linux.sh
+    """
+    with open(".gitignore", "a+") as f:
+        f.write(dedent(text))
+
+
 def run() -> None:
     args: argparse.Namespace = get_args()
     set_verbosity(args)
-    abs_path_to_model = model_path(args.abs_path_to_model)
-    anylogic_dir = validated_anylogic_dir(args.anylogic_dir)
-    export_model(abs_path_to_model, anylogic_dir)
-    remove_chrome_refs_when_files_modified(abs_path_to_model, args.experiments)
+    if args.command == "init":
+        init_gitignore()
+    else:
+        abs_path_to_model = model_path(args.abs_path_to_model)
+        anylogic_dir = validated_anylogic_dir(args.anylogic_dir)
+        export_model(abs_path_to_model, anylogic_dir)
+        remove_chrome_refs_when_files_modified(abs_path_to_model, args.experiments)
 
 
 if __name__ == "__main__":
