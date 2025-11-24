@@ -108,6 +108,9 @@ def get_args() -> argparse.Namespace:
     # Initialize continuous integration
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
     init = subparsers.add_parser("init", help="Initialize continuous integration.")
+    init.add_argument(
+        "--model_name", nargs="?", type=str, help="The name of the AnyLogic model."
+    )
 
     # Export options
     parser.add_argument(
@@ -254,13 +257,14 @@ def set_verbosity(args) -> None:
         logger.setLevel(logging.INFO)
 
 
-def init_gitignore() -> None:
-    text = """
-        # Example model for testing
-        DistributionCenter/*
-        # Exported model folders
-        DistributionCenter_*/
-        DistributionCenter_*/*_linux.sh
+def init_gitignore(model_name: str) -> None:
+    text = f"""
+        # Ignore all model's experiment folders
+        {model_name}_*/
+        # Except for the shell script...
+        {model_name}_*/*_linux.sh
+        # That calls the jar file(s)
+        {model_name}_*/model[0-9]*.jar
     """
     with open(".gitignore", "a+") as f:
         f.write(dedent(text))
@@ -270,7 +274,7 @@ def run() -> None:
     args: argparse.Namespace = get_args()
     set_verbosity(args)
     if args.command == "init":
-        init_gitignore()
+        init_gitignore(args.model_name)
     else:
         abs_path_to_model = model_path(args.abs_path_to_model)
         anylogic_dir = validated_anylogic_dir(args.anylogic_dir)
