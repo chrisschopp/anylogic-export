@@ -267,6 +267,11 @@ def init_gitignore(model_name: str) -> None:
             f"AnyLogic models in this directory: {model_paths}"
             "Please specify the model name. Use `--help` for more information."
         )
+    elif len(model_paths) == 0:
+        raise ValueError(
+            f"No AnyLogic model found in {Path.cwd()}. "
+            "To initialize before a model is created, provide a model name. See --help for more info."
+        )
     model_name = model_name if model_name else model_paths[0].parent
     text = f"""
         # Ignore all model's experiment folders
