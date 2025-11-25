@@ -258,6 +258,16 @@ def set_verbosity(args) -> None:
 
 
 def init_gitignore(model_name: str) -> None:
+    model_paths = [
+        f for f in Path(".").rglob("*.alp*") if f.suffix in {".alp", ".alpx"}
+    ]
+    if len(model_paths) > 1:
+        raise ValueError(
+            "Model name autodiscovery failed as there are multiple "
+            f"AnyLogic models in this directory: {model_paths}"
+            "Please specify the model name. Use `--help` for more information."
+        )
+    model_name = model_name if model_name else model_paths[0].parent
     text = f"""
         # Ignore all model's experiment folders
         {model_name}_*/
