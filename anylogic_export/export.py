@@ -1,16 +1,19 @@
 import argparse
 import json
 import logging
+import platform
 import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, Generator
-import platform
 from textwrap import dedent
+from typing import Any, Generator
 
+import typer
+from typing_extensions import Annotated
 from watchfiles import watch
 
+app = typer.Typer()
 
 logger = logging.getLogger("export_anylogic_model")
 logFormatter = logging.Formatter("[%(levelname)s] %(message)s")
@@ -248,16 +251,33 @@ def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
                 sys.exit(0)
 
 
-def set_verbosity(args) -> None:
-    if args.silent:
+@app.command()
+def set_verbosity(
+    silent: Annotated[bool, typer.Option("--silent")] = False,
+    verbose: Annotated[bool, typer.Option("--verbose")] = False,
+) -> None:
+    """Set the logging level to display more/fewer messages.
+
+    Args:
+        silent (bool): Disable all logging except errors. Defaults to False.
+        verbose (bool): Enable verbose logging. Defaults to False.
+    """
+    if silent:
         logger.setLevel(logging.ERROR)
-    elif args.verbose:
+    elif verbose:
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
 
 
-def init_gitignore(model_name: str) -> None:
+@app.command()
+def init(model_name: Annotated[str, typer.Option("--model_name")] = None) -> None:
+    """Initialize the .gitignore file to enable exported models to run in continuous integration.
+
+    Args:
+        model_name (str): If multiple AnyLogic models are present in the parent folder, the model to export must be passed manually.\b
+        If None, the only model found will be exported. Defaults to None.
+    """
     model_paths = [
         f for f in Path(".").rglob("*.alp*") if f.suffix in {".alp", ".alpx"}
     ]
@@ -267,12 +287,12 @@ def init_gitignore(model_name: str) -> None:
             f"AnyLogic models in this directory: {model_paths}"
             "Please specify the model name. Use `--help` for more information."
         )
-    elif len(model_paths) == 0:
+    elif not model_paths:
         raise ValueError(
             f"No AnyLogic model found in {Path.cwd()}. "
             "To initialize before a model is created, provide a model name. See --help for more info."
         )
-    model_name = model_name if model_name else model_paths[0].parent
+    model_name = model_name or model_paths[0].parent
     text = f"""
         # Ignore all model's experiment folders
         {model_name}_*/
@@ -287,9 +307,9 @@ def init_gitignore(model_name: str) -> None:
 
 def run() -> None:
     args: argparse.Namespace = get_args()
-    set_verbosity(args)
+    set_verbosity()
     if args.command == "init":
-        init_gitignore(args.model_name)
+        init(args.model_name)
     else:
         abs_path_to_model = model_path(args.abs_path_to_model)
         anylogic_dir = validated_anylogic_dir(args.anylogic_dir)
@@ -298,4 +318,4 @@ def run() -> None:
 
 
 if __name__ == "__main__":
-    run()
+    app()
