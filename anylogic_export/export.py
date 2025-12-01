@@ -253,8 +253,8 @@ def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
 
 @app.command()
 def set_verbosity(
-    silent: Annotated[bool, typer.Option("--silent")] = False,
-    verbose: Annotated[bool, typer.Option("--verbose")] = False,
+    silent: Annotated[bool, typer.Option("--silent", "-s")] = False,
+    verbose: Annotated[bool, typer.Option("--verbose", "-v")] = False,
 ) -> None:
     """Set the logging level to display more/fewer messages.
 
