@@ -10,6 +10,7 @@ from textwrap import dedent
 from typing import Any, Generator
 
 import typer
+from typer import Argument, Option
 from typing_extensions import Annotated
 from watchfiles import watch
 
@@ -47,6 +48,27 @@ def export_model(path_to_model: str, anylogic_dir: str) -> None:
         cwd=anylogic_dir,
         shell=True,
     )
+
+
+@app.command()
+def export(
+    path_to_model: str,
+    anylogic_dir: Annotated[str, Argument(default_factory=default_path_to_anylogic)],
+    experiments: Annotated[list[str], Argument()] = ["CustomExperiment"],
+) -> None:
+    """Export an AnyLogic model to a standalone executable.
+
+    Args:
+        path_to_model (str): Relative path to an AnyLogic model (.alp or .alpx).
+        anylogic_dir (Annotated[str  |  None, Option, optional): AnyLogic Professional directory. Defaults to None.
+
+    Raises:
+        ValueError: If invalid path to directory containing `AnyLogix.exe`.
+    """
+    abs_path_to_model = model_path(path_to_model)
+    anylogic_dir = validated_anylogic_dir(anylogic_dir)
+    export_model(abs_path_to_model, anylogic_dir)
+    remove_chrome_refs_when_files_modified(abs_path_to_model, experiments)
 
 
 def model_path(path_to_model: str) -> Path:
@@ -253,12 +275,13 @@ def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
 
 @app.command()
 def set_verbosity(
-    silent: Annotated[bool, typer.Option("--silent", "-s")] = False,
-    verbose: Annotated[bool, typer.Option("--verbose", "-v")] = False,
+    silent: Annotated[bool, Option("--silent", "-s")] = False,
+    verbose: Annotated[bool, Option("--verbose", "-v")] = False,
 ) -> None:
     """Set the logging level to display more/fewer messages.
 
     Args:
+        A
         silent (bool): Disable all logging except errors. Defaults to False.
         verbose (bool): Enable verbose logging. Defaults to False.
     """
@@ -271,7 +294,7 @@ def set_verbosity(
 
 
 @app.command()
-def init(model_name: Annotated[str, typer.Option("--model_name")] = None) -> None:
+def init(model_name: Annotated[str, Option("--model_name", "-n")] = None) -> None:
     """Initialize the .gitignore file to enable exported models to run in continuous integration.
 
     Args:
