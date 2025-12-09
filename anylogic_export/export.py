@@ -1,4 +1,3 @@
-import argparse
 import json
 import logging
 import platform
@@ -50,27 +49,6 @@ def export_model(path_to_model: str, anylogic_dir: str) -> None:
     )
 
 
-@app.command()
-def export(
-    path_to_model: str,
-    anylogic_dir: Annotated[str, Argument(default_factory=default_path_to_anylogic)],
-    experiments: Annotated[list[str], Argument()] = ["CustomExperiment"],
-) -> None:
-    """Export an AnyLogic model to a standalone executable.
-
-    Args:
-        path_to_model (str): Relative path to an AnyLogic model (.alp or .alpx).
-        anylogic_dir (Annotated[str  |  None, Option, optional): AnyLogic Professional directory. Defaults to None.
-
-    Raises:
-        ValueError: If invalid path to directory containing `AnyLogix.exe`.
-    """
-    abs_path_to_model = model_path(path_to_model)
-    anylogic_dir = validated_anylogic_dir(anylogic_dir)
-    export_model(abs_path_to_model, anylogic_dir)
-    remove_chrome_refs_when_files_modified(abs_path_to_model, experiments)
-
-
 def model_path(path_to_model: str) -> Path:
     path = Path(path_to_model)
     if Path(path).suffix not in {".alp", ".alpx"}:
@@ -120,54 +98,6 @@ def remove_chrome_reference(file_path: Path) -> None:
     else:
         logger.warning(f"Chrome reference not found in {file_path.parent.name}.")
         sys.exit(1)
-
-
-def get_args() -> argparse.Namespace:
-    """Get the arguments passed at the command line.
-
-    Returns:
-        Namespace: Contains the argument names as instance variables.
-    """
-    parser = argparse.ArgumentParser()
-
-    # Initialize continuous integration
-    subparsers = parser.add_subparsers(dest="command", help="Available commands")
-    init = subparsers.add_parser("init", help="Initialize continuous integration.")
-    init.add_argument(
-        "--model_name", nargs="?", type=str, help="The name of the AnyLogic model."
-    )
-
-    # Export options
-    parser.add_argument(
-        "abs_path_to_model",
-        nargs="?",
-        type=Path,
-        help="Absolute path to the .alp/.alpx file",
-    )
-    parser.add_argument(
-        "--anylogic_dir",
-        nargs="?",
-        type=Path,
-        default=default_path_to_anylogic(),
-        help="Absolute path to AnyLogic.exe. (default: %(default)s)",
-    )
-    parser.add_argument(
-        "--experiments",
-        nargs="*",
-        type=str,
-        default=["CustomExperiment"],
-        help="Experiments to run in continuous integration. Note: all experiments are exported by AnyLogic.",
-    )
-
-    # Set verbosity
-    verbosity = parser.add_mutually_exclusive_group()
-    verbosity.add_argument(
-        "-v", "--verbose", action="store_true", help="Show more output."
-    )
-    verbosity.add_argument(
-        "-s", "--silent", action="store_true", help="Suppress all output except errors."
-    )
-    return parser.parse_args()
 
 
 def experiment_dir(model_dir: Path) -> Generator[Path, Any, None]:
@@ -328,16 +258,25 @@ def init(model_name: Annotated[str, Option("--model_name", "-n")] = None) -> Non
         f.write(dedent(text))
 
 
-def run() -> None:
-    args: argparse.Namespace = get_args()
-    set_verbosity()
-    if args.command == "init":
-        init(args.model_name)
-    else:
-        abs_path_to_model = model_path(args.abs_path_to_model)
-        anylogic_dir = validated_anylogic_dir(args.anylogic_dir)
-        export_model(abs_path_to_model, anylogic_dir)
-        remove_chrome_refs_when_files_modified(abs_path_to_model, args.experiments)
+@app.command()
+def export(
+    path_to_model: str,
+    anylogic_dir: Annotated[str, Argument(default_factory=default_path_to_anylogic)],
+    experiments: Annotated[list[str], Argument()] = ["CustomExperiment"],
+) -> None:
+    """Export an AnyLogic model to a standalone executable.
+
+    Args:
+        path_to_model (str): Relative path to an AnyLogic model (.alp or .alpx).
+        anylogic_dir (Annotated[str  |  None, Option, optional): AnyLogic Professional directory. Defaults to None.
+
+    Raises:
+        ValueError: If invalid path to directory containing `AnyLogix.exe`.
+    """
+    abs_path_to_model = model_path(path_to_model)
+    anylogic_dir = validated_anylogic_dir(anylogic_dir)
+    export_model(abs_path_to_model, anylogic_dir)
+    remove_chrome_refs_when_files_modified(abs_path_to_model, experiments)
 
 
 if __name__ == "__main__":
