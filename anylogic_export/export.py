@@ -118,7 +118,7 @@ def remove_chrome_reference(file_path: Path) -> None:
         logger.info(f"Chrome reference removed from {file_path.parent.name}.")
     else:
         logger.warning(f"Chrome reference not found in {file_path.parent.name}.")
-        sys.exit(1)
+        raise typer.Exit(1)
 
 
 def experiment_dir(model_dir: Path) -> Generator[Path, Any, None]:
@@ -194,7 +194,7 @@ def get_jar_files(linux_script_path: Path) -> list[Path]:
     """
     with open(linux_script_path, "r") as f:
         java_command: str = next(
-            (line for line in f.readlines() if line.startswith("java -cp"))
+            (line for line in f.readlines() if line.startswith("java"))
         )
 
     pattern_jar_file = r"(?:\b|^)(?:[a-zA-Z0-9_/.-]+/)?model\d*\.jar\b"
@@ -221,7 +221,7 @@ def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
             )
             if all(jar_paths.values()):
                 logger.info("Git added all jar files.")
-                sys.exit(0)
+                raise typer.Exit(0)
 
 
 @app.command()
