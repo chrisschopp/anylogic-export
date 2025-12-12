@@ -9,11 +9,32 @@ from textwrap import dedent
 from typing import Any, Generator
 
 import typer
-from typer import Argument, Option
+from typer import Option
 from typing_extensions import Annotated
 from watchfiles import watch
 
-app = typer.Typer()
+
+def set_verbosity(
+    silent: Annotated[bool, Option("--silent", "-s")] = False,
+    verbose: Annotated[bool, Option("--verbose", "-v")] = False,
+) -> None:
+    """Set the logging level to display more/fewer messages.
+
+    Args:
+        silent (bool): Disable all logging except errors. Defaults to False.
+        verbose (bool): Enable verbose logging. Defaults to False.
+    """
+    if silent:
+        if verbose:
+            raise typer.BadParameter("Cannot use --silent and --verbose together.")
+        logger.setLevel(logging.ERROR)
+    elif verbose:
+        logger.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.INFO)
+
+
+app = typer.Typer(callback=set_verbosity)
 
 logger = logging.getLogger("export_anylogic_model")
 logFormatter = logging.Formatter("[%(levelname)s] %(message)s")
@@ -31,7 +52,7 @@ def default_path_to_anylogic() -> Path:
             return NotImplementedError
 
 
-def export_model(path_to_model: str, anylogic_dir: str) -> None:
+def export_model(path_to_model: str, anylogic_dir: Path) -> None:
     path_to_model = model_path(path_to_model)
     for raw_path in (anylogic_dir,):
         path = Path(raw_path)
@@ -204,31 +225,16 @@ def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
 
 
 @app.command()
-def set_verbosity(
-    silent: Annotated[bool, Option("--silent", "-s")] = False,
-    verbose: Annotated[bool, Option("--verbose", "-v")] = False,
+def init(
+    model_name: Annotated[str | None, Option("--model_name", "-n")] = None,
 ) -> None:
-    """Set the logging level to display more/fewer messages.
-
-    Args:
-        A
-        silent (bool): Disable all logging except errors. Defaults to False.
-        verbose (bool): Enable verbose logging. Defaults to False.
-    """
-    if silent:
-        logger.setLevel(logging.ERROR)
-    elif verbose:
-        logger.setLevel(logging.DEBUG)
-    else:
-        logger.setLevel(logging.INFO)
-
-
-@app.command()
-def init(model_name: Annotated[str, Option("--model_name", "-n")] = None) -> None:
     """Initialize the .gitignore file to enable exported models to run in continuous integration.
 
+    If the directory in which this is executed contains only one AnyLogic model, the
+    `model_name` can be automatically determined.
+
     Args:
-        model_name (str): If multiple AnyLogic models are present in the parent folder, the model to export must be passed manually.\b
+        model_name (str | None): If multiple AnyLogic models are present in the parent folder, the model to export must be passed manually.\b
         If None, the only model found will be exported. Defaults to None.
     """
     model_paths = [
@@ -261,14 +267,25 @@ def init(model_name: Annotated[str, Option("--model_name", "-n")] = None) -> Non
 @app.command()
 def export(
     path_to_model: str,
-    anylogic_dir: Annotated[str, Argument(default_factory=default_path_to_anylogic)],
-    experiments: Annotated[list[str], Argument()] = ["CustomExperiment"],
+    *,
+    anylogic_dir: Annotated[
+        Path | None,
+        Option(
+            "--anylogic_dir",
+            default_factory=default_path_to_anylogic,
+            help="Path to AnyLogic Professional installation; defaults to auto-detected path.",
+        ),
+    ],
+    experiments: Annotated[
+        list[str],
+        Option("--experiments", "-e", default_factory=lambda: ["CustomExperiment"]),
+    ],
 ) -> None:
     """Export an AnyLogic model to a standalone executable.
 
     Args:
         path_to_model (str): Relative path to an AnyLogic model (.alp or .alpx).
-        anylogic_dir (Annotated[str  |  None, Option, optional): AnyLogic Professional directory. Defaults to None.
+        anylogic_dir (Path | None): AnyLogic Professional directory. Defaults to None.
 
     Raises:
         ValueError: If invalid path to directory containing `AnyLogix.exe`.
