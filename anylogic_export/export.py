@@ -1,16 +1,40 @@
-import argparse
 import json
 import logging
+import platform
 import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, Generator
-import platform
 from textwrap import dedent
+from typing import Any, Generator
 
+import typer
+from typer import Option
+from typing_extensions import Annotated
 from watchfiles import watch
 
+
+def set_verbosity(
+    silent: Annotated[bool, Option("--silent", "-s")] = False,
+    verbose: Annotated[bool, Option("--verbose", "-v")] = False,
+) -> None:
+    """Set the logging level to display more/fewer messages.
+
+    Args:
+        silent (bool): Disable all logging except errors. Defaults to False.
+        verbose (bool): Enable verbose logging. Defaults to False.
+    """
+    if silent:
+        if verbose:
+            raise typer.BadParameter("Cannot use --silent and --verbose together.")
+        logger.setLevel(logging.ERROR)
+    elif verbose:
+        logger.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.INFO)
+
+
+app = typer.Typer(callback=set_verbosity)
 
 logger = logging.getLogger("export_anylogic_model")
 logFormatter = logging.Formatter("[%(levelname)s] %(message)s")
@@ -28,7 +52,7 @@ def default_path_to_anylogic() -> Path:
             return NotImplementedError
 
 
-def export_model(path_to_model: str, anylogic_dir: str) -> None:
+def export_model(path_to_model: str, anylogic_dir: Path) -> None:
     path_to_model = model_path(path_to_model)
     for raw_path in (anylogic_dir,):
         path = Path(raw_path)
@@ -95,54 +119,6 @@ def remove_chrome_reference(file_path: Path) -> None:
     else:
         logger.warning(f"Chrome reference not found in {file_path.parent.name}.")
         sys.exit(1)
-
-
-def get_args() -> argparse.Namespace:
-    """Get the arguments passed at the command line.
-
-    Returns:
-        Namespace: Contains the argument names as instance variables.
-    """
-    parser = argparse.ArgumentParser()
-
-    # Initialize continuous integration
-    subparsers = parser.add_subparsers(dest="command", help="Available commands")
-    init = subparsers.add_parser("init", help="Initialize continuous integration.")
-    init.add_argument(
-        "--model_name", nargs="?", type=str, help="The name of the AnyLogic model."
-    )
-
-    # Export options
-    parser.add_argument(
-        "abs_path_to_model",
-        nargs="?",
-        type=Path,
-        help="Absolute path to the .alp/.alpx file",
-    )
-    parser.add_argument(
-        "--anylogic_dir",
-        nargs="?",
-        type=Path,
-        default=default_path_to_anylogic(),
-        help="Absolute path to AnyLogic.exe. (default: %(default)s)",
-    )
-    parser.add_argument(
-        "--experiments",
-        nargs="*",
-        type=str,
-        default=["CustomExperiment"],
-        help="Experiments to run in continuous integration. Note: all experiments are exported by AnyLogic.",
-    )
-
-    # Set verbosity
-    verbosity = parser.add_mutually_exclusive_group()
-    verbosity.add_argument(
-        "-v", "--verbose", action="store_true", help="Show more output."
-    )
-    verbosity.add_argument(
-        "-s", "--silent", action="store_true", help="Suppress all output except errors."
-    )
-    return parser.parse_args()
 
 
 def experiment_dir(model_dir: Path) -> Generator[Path, Any, None]:
@@ -248,16 +224,19 @@ def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
                 sys.exit(0)
 
 
-def set_verbosity(args) -> None:
-    if args.silent:
-        logger.setLevel(logging.ERROR)
-    elif args.verbose:
-        logger.setLevel(logging.DEBUG)
-    else:
-        logger.setLevel(logging.INFO)
+@app.command()
+def init(
+    model_name: Annotated[str | None, Option("--model_name", "-n")] = None,
+) -> None:
+    """Initialize the .gitignore file to enable exported models to run in continuous integration.
 
+    If the directory in which this is executed contains only one AnyLogic model, the
+    `model_name` can be automatically determined.
 
-def init_gitignore(model_name: str) -> None:
+    Args:
+        model_name (str | None): If multiple AnyLogic models are present in the parent folder, the model to export must be passed manually.\b
+        If None, the only model found will be exported. Defaults to None.
+    """
     model_paths = [
         f for f in Path(".").rglob("*.alp*") if f.suffix in {".alp", ".alpx"}
     ]
@@ -267,12 +246,12 @@ def init_gitignore(model_name: str) -> None:
             f"AnyLogic models in this directory: {model_paths}"
             "Please specify the model name. Use `--help` for more information."
         )
-    elif len(model_paths) == 0:
+    elif not model_paths:
         raise ValueError(
             f"No AnyLogic model found in {Path.cwd()}. "
             "To initialize before a model is created, provide a model name. See --help for more info."
         )
-    model_name = model_name if model_name else model_paths[0].parent
+    model_name = model_name or model_paths[0].parent
     text = f"""
         # Ignore all model's experiment folders
         {model_name}_*/
@@ -285,17 +264,37 @@ def init_gitignore(model_name: str) -> None:
         f.write(dedent(text))
 
 
-def run() -> None:
-    args: argparse.Namespace = get_args()
-    set_verbosity(args)
-    if args.command == "init":
-        init_gitignore(args.model_name)
-    else:
-        abs_path_to_model = model_path(args.abs_path_to_model)
-        anylogic_dir = validated_anylogic_dir(args.anylogic_dir)
-        export_model(abs_path_to_model, anylogic_dir)
-        remove_chrome_refs_when_files_modified(abs_path_to_model, args.experiments)
+@app.command()
+def export(
+    path_to_model: str,
+    *,
+    anylogic_dir: Annotated[
+        Path | None,
+        Option(
+            "--anylogic_dir",
+            default_factory=default_path_to_anylogic,
+            help="Path to AnyLogic Professional installation; defaults to auto-detected path.",
+        ),
+    ],
+    experiments: Annotated[
+        list[str],
+        Option("--experiments", "-e", default_factory=lambda: ["CustomExperiment"]),
+    ],
+) -> None:
+    """Export an AnyLogic model to a standalone executable.
+
+    Args:
+        path_to_model (str): Relative path to an AnyLogic model (.alp or .alpx).
+        anylogic_dir (Path | None): AnyLogic Professional directory. Defaults to None.
+
+    Raises:
+        ValueError: If invalid path to directory containing `AnyLogix.exe`.
+    """
+    abs_path_to_model = model_path(path_to_model)
+    anylogic_dir = validated_anylogic_dir(anylogic_dir)
+    export_model(abs_path_to_model, anylogic_dir)
+    remove_chrome_refs_when_files_modified(abs_path_to_model, experiments)
 
 
 if __name__ == "__main__":
-    run()
+    app()
