@@ -3,13 +3,12 @@ import logging
 import platform
 import re
 import subprocess
-import sys
 from pathlib import Path
 from textwrap import dedent
 from typing import Any, Generator
 
 import typer
-from typer import Option
+from typer import Argument, Option
 from typing_extensions import Annotated
 from watchfiles import watch
 
@@ -224,18 +223,20 @@ def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
                 raise typer.Exit(0)
 
 
-@app.command()
-def init(
-    model_name: Annotated[str | None, Option("--model_name", "-n")] = None,
-) -> None:
-    """Initialize the .gitignore file to enable exported models to run in continuous integration.
+def discover_model_path() -> Path:
+    """Recursively search the current directory and sub-directories for AnyLogic models.
 
-    If the directory in which this is executed contains only one AnyLogic model, the
-    `model_name` can be automatically determined.
+    If there is only model, returns the path to it. If there is more than one model, an
+    error is raised since it is unclear which model should be exported.
 
-    Args:
-        model_name (str | None): If multiple AnyLogic models are present in the parent folder, the model to export must be passed manually.\b
-        If None, the only model found will be exported. Defaults to None.
+    The path to the model to export will need to be provided.
+
+    Raises:
+        ValueError: Multiple AnyLogic models found.
+        ValueError: No AnyLogic model found.
+
+    Returns:
+        Path: The path to the only model (recursively) found in the current directory.
     """
     model_paths = [
         f for f in Path(".").rglob("*.alp*") if f.suffix in {".alp", ".alpx"}
@@ -251,7 +252,24 @@ def init(
             f"No AnyLogic model found in {Path.cwd()}. "
             "To initialize before a model is created, provide a model name. See --help for more info."
         )
-    model_name = model_name or model_paths[0].parent
+    return model_paths[0]
+
+
+@app.command()
+def init(
+    model_name: Annotated[str | None, Option("--model_name", "-n")] = None,
+) -> None:
+    """Initialize the .gitignore file to enable exported models to run in continuous integration.
+
+    If the directory in which this is executed contains only one AnyLogic model, the
+    `model_name` can be automatically determined.
+
+    Args:
+        model_name (str | None): If multiple AnyLogic models are present in the parent folder, the model to export must be passed manually.\b
+        If None, the only model found will be exported. Defaults to None.
+    """
+    model_paths = discover_model_path()
+    model_name = model_name or model_paths.parent
     text = f"""
         # Ignore all model's experiment folders
         {model_name}_*/
@@ -266,7 +284,13 @@ def init(
 
 @app.command()
 def export(
-    path_to_model: str,
+    path_to_model: Annotated[
+        Path | None,
+        Argument(
+            help="Path to AnyLogic model; defaults to auto-detected path.",
+            default_factory=discover_model_path,
+        ),
+    ],
     *,
     anylogic_dir: Annotated[
         Path | None,
