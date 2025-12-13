@@ -8,6 +8,7 @@ from textwrap import dedent
 from typing import Any, Generator
 
 import typer
+from rich.logging import RichHandler
 from typer import Argument, Option
 from typing_extensions import Annotated
 from watchfiles import watch
@@ -36,10 +37,10 @@ def set_verbosity(
 app = typer.Typer(callback=set_verbosity)
 
 logger = logging.getLogger("export_anylogic_model")
-logFormatter = logging.Formatter("[%(levelname)s] %(message)s")
-consoleHandler = logging.StreamHandler()
-consoleHandler.setFormatter(logFormatter)
-logger.addHandler(consoleHandler)
+FORMAT = "%(message)s"
+logging.basicConfig(
+    level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+)
 
 
 def default_path_to_anylogic() -> Path:
@@ -164,7 +165,9 @@ def remove_chrome_refs_when_files_modified(
     )
     jar_paths: dict[Path, bool] = {}
 
-    logger.debug(f"Watching for changes in {linux_scripts}")
+    logger.debug(
+        f"Watching for changes in {json.dumps(linux_scripts, default=lambda _: str(_), indent=4)}"
+    )
     for change in watch(*linux_scripts):
         for _ in change:
             file = Path(_[1])
