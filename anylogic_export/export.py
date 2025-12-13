@@ -11,7 +11,7 @@ import typer
 from rich.logging import RichHandler
 from typer import Argument, Option
 from typing_extensions import Annotated
-from watchfiles import watch
+from watchfiles import Change, watch
 
 
 def set_verbosity(
@@ -168,11 +168,10 @@ def remove_chrome_refs_when_files_modified(
     logger.debug(
         f"Watching for changes in {json.dumps(linux_scripts, default=lambda _: str(_), indent=4)}"
     )
-    for change in watch(*linux_scripts):
+    for change in watch(*linux_scripts, rust_timeout=10_000):
         for _ in change:
             file = Path(_[1])
             if not chrome_ref_removed[file]:
-                logger.debug(f"Modified by AnyLogic export: {file}")
                 remove_chrome_reference(file)
                 chrome_ref_removed[file] = True
                 for jar in get_jar_files(file):
@@ -205,6 +204,11 @@ def get_jar_files(linux_script_path: Path) -> list[Path]:
     return [experiment_dir / _ for _ in jars]
 
 
+def ignore_deleted(change: Change, path: str) -> bool:
+    """Don't detect a change when a watched file is deleted."""
+    return change != Change.deleted
+
+
 def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
     """Watch the specified jar files and `git add` them when modified.
 
@@ -212,7 +216,12 @@ def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
         jar_paths (dict[Path, bool]):
         model_dir (Path):
     """
-    for change in watch(*list(jar_paths.keys())):
+    logger.debug(
+        f"Watching for jar changes...{json.dumps({str(k): v for k, v in jar_paths.items()}, indent=4)}"
+    )
+    for change in watch(
+        *list(jar_paths.keys()), watch_filter=ignore_deleted, rust_timeout=10_000
+    ):
         for _ in change:
             file = Path(_[1])
             jar_paths[Path(file)] = True
