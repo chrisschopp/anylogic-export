@@ -53,36 +53,7 @@ Thumbs.db
 build/
 
 *.swp
-# Example model for testing
-DistributionCenter/*
+
 # Exported model folders
-DistributionCenter_*/
-DistributionCenter_*/*_linux.sh
-
-# Ignore all model's experiment folders
-DistributionCenter_*/
-# Except for the shell script...
-DistributionCenter_*/*_linux.sh
-# That calls the jar file(s)
-DistributionCenter_*/model[0-9]*.jar
-
-# Ignore all model's experiment folders
-DistributionCenter_*/
-# Except for the shell script...
-DistributionCenter_*/*_linux.sh
-# That calls the jar file(s)
-DistributionCenter_*/model[0-9]*.jar
-
-# Ignore all model's experiment folders
-DistributionCenter_*/
-# Except for the shell script...
-DistributionCenter_*/*_linux.sh
-# That calls the jar file(s)
-DistributionCenter_*/model[0-9]*.jar
-
-# Ignore all model's experiment folders
-Atreides_*/
-# Except for the shell script...
-Atreides_*/*_linux.sh
-# That calls the jar file(s)
-Atreides_*/model[0-9]*.jar
+DistributionCenter_*/*
+!DistributionCenter_*/*_linux.sh

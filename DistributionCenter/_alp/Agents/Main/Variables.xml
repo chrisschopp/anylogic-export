@@ -1,0 +1,1037 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Variables>
+	<Variable Class="PlainVariable">
+		<Id>1412863452040</Id>
+		<Name><![CDATA[lastOrderId]]></Name>
+		<X>-300</X>
+		<Y>1600</Y>
+		<Label>
+			<X>11</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1413886090311</Id>
+		<Name><![CDATA[cameraIdx]]></Name>
+		<X>-550</X>
+		<Y>-1080</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1413886090313</Id>
+		<Name><![CDATA[timer]]></Name>
+		<X>-550</X>
+		<Y>-1040</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[javax.swing.Timer]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1418636595209</Id>
+		<Name><![CDATA[activeDockColor]]></Name>
+		<X>-800</X>
+		<Y>1850</Y>
+		<Label>
+			<X>14</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="true"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[Color]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new Color(230, 230, 250, 150)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1418636783519</Id>
+		<Name><![CDATA[nonActiveDockColor]]></Name>
+		<X>-800</X>
+		<Y>1870</Y>
+		<Label>
+			<X>14</X>
+			<Y>-1</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="true"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[Color]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new Color(255, 63, 63, 100)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1418799675051</Id>
+		<Name><![CDATA[amount]]></Name>
+		<X>-300</X>
+		<Y>-1080</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[1]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1418799691531</Id>
+		<Name><![CDATA[type]]></Name>
+		<X>-300</X>
+		<Y>-1100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[1]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1418799801940</Id>
+		<Name><![CDATA[orderCapacities]]></Name>
+		<X>-300</X>
+		<Y>-1060</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int[]]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new int[palletTypesNum]]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1418800066532</Id>
+		<Name><![CDATA[n]]></Name>
+		<X>-300</X>
+		<Y>-1040</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[10]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1418806159626</Id>
+		<Name><![CDATA[v]]></Name>
+		<X>-300</X>
+		<Y>-1020</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1489390965553</Id>
+		<Name><![CDATA[selectedViewArea]]></Name>
+		<X>-300</X>
+		<Y>-980</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ViewArea]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[view2D]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1570006765080</Id>
+		<Name><![CDATA[maxOrdersToShow]]></Name>
+		<X>-300</X>
+		<Y>-2980</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="true"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[37]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1418369333666</Id>
+		<Name><![CDATA[initialUtilization]]></Name>
+		<X>-800</X>
+		<Y>100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.2]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1418369333664</Id>
+				<Label><![CDATA[Initial storage utilization]]></Label>
+				<EditorContolType>SLIDER</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>1</MaxSliderValue>
+				<DelimeterType>SEPARATE_SECTION</DelimeterType>
+				<StartSection>Warehouse capacity</StartSection>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1418629022831</Id>
+		<Name><![CDATA[numLoadingDock]]></Name>
+		<X>-800</X>
+		<Y>180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[int]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[3]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1418629022829</Id>
+				<Label><![CDATA[Loading docks number]]></Label>
+				<EditorContolType>SLIDER</EditorContolType>
+				<MinSliderValue>1</MinSliderValue>
+				<MaxSliderValue>7</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1418629050900</Id>
+		<Name><![CDATA[numUnloadingDock]]></Name>
+		<X>-800</X>
+		<Y>160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[int]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[5]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1418629050898</Id>
+				<Label><![CDATA[Unloading docks number]]></Label>
+				<EditorContolType>SLIDER</EditorContolType>
+				<MinSliderValue>1</MinSliderValue>
+				<MaxSliderValue>5</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1413729295737</Id>
+		<Name><![CDATA[forkliftsNum]]></Name>
+		<X>-800</X>
+		<Y>140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[int]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[30]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1413729295735</Id>
+				<Label><![CDATA[Forklifts number]]></Label>
+				<EditorContolType>SLIDER</EditorContolType>
+				<MinSliderValue>10</MinSliderValue>
+				<MaxSliderValue>44</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1418585359536</Id>
+		<Name><![CDATA[forkliftsPerOrderAssembling]]></Name>
+		<X>-550</X>
+		<Y>120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[int]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[2]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1418585359534</Id>
+				<Label><![CDATA[Forklifts per order assembling]]></Label>
+				<EditorContolType>SLIDER</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>10</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1413751916907</Id>
+		<Name><![CDATA[forkliftsPerUnloadDock]]></Name>
+		<X>-550</X>
+		<Y>100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[int]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[4]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1413751916905</Id>
+				<Label><![CDATA[Forklifts per unload dock]]></Label>
+				<EditorContolType>SLIDER</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>10</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1418719603954</Id>
+		<Name><![CDATA[forkliftsPerOrderReMoving]]></Name>
+		<X>-550</X>
+		<Y>140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[int]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[1]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1418719603952</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1418369219316</Id>
+		<Name><![CDATA[orderRate]]></Name>
+		<X>-550</X>
+		<Y>210</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type/>
+			<UnitType>RATE</UnitType>
+			<UnitOfValue Class="RateUnits">PER_HOUR</UnitOfValue>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeUnitValue">
+				<Code><![CDATA[3]]></Code>
+				<Unit Class="RateUnits">PER_HOUR</Unit>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1418369219314</Id>
+				<Label><![CDATA[Order rate]]></Label>
+				<EditorContolType>UNIT_EDITOR</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>SEPARATE_SECTION</DelimeterType>
+				<StartSection>Logistics and orders</StartSection>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1418984855856</Id>
+		<Name><![CDATA[minOrderSize]]></Name>
+		<X>-550</X>
+		<Y>260</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[int]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[10]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1418984855854</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1418984878098</Id>
+		<Name><![CDATA[maxOrderSize]]></Name>
+		<X>-550</X>
+		<Y>280</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[int]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[14]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1418984878096</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1422179204643</Id>
+		<Name><![CDATA[ordersListMaxLength]]></Name>
+		<X>-550</X>
+		<Y>300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[int]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[50]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1422179204641</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1418296153174</Id>
+		<Name><![CDATA[unloadingRate]]></Name>
+		<X>-550</X>
+		<Y>170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type/>
+			<UnitType>RATE</UnitType>
+			<UnitOfValue Class="RateUnits">PER_HOUR</UnitOfValue>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeUnitValue">
+				<Code><![CDATA[7]]></Code>
+				<Unit Class="RateUnits">PER_HOUR</Unit>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1418296153172</Id>
+				<EditorContolType>UNIT_EDITOR</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1418296176334</Id>
+		<Name><![CDATA[loadingRate]]></Name>
+		<X>-550</X>
+		<Y>190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type/>
+			<UnitType>RATE</UnitType>
+			<UnitOfValue Class="RateUnits">PER_HOUR</UnitOfValue>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeUnitValue">
+				<Code><![CDATA[3]]></Code>
+				<Unit Class="RateUnits">PER_HOUR</Unit>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1418296176332</Id>
+				<EditorContolType>UNIT_EDITOR</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1418641103392</Id>
+		<Name><![CDATA[truckCapacity]]></Name>
+		<X>-550</X>
+		<Y>240</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[int]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[15]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1418641103390</Id>
+				<Label><![CDATA[Truck capacity]]></Label>
+				<EditorContolType>SLIDER</EditorContolType>
+				<MinSliderValue>10</MinSliderValue>
+				<MaxSliderValue>30</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1417442973982</Id>
+		<Name><![CDATA[palletTypesNum]]></Name>
+		<X>-800</X>
+		<Y>120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[int]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[10]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1417442973980</Id>
+				<Label><![CDATA[palletTypesNum]]></Label>
+				<EditorContolType>SLIDER</EditorContolType>
+				<MinSliderValue>1</MinSliderValue>
+				<MaxSliderValue>16</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1413469927972</Id>
+		<Name><![CDATA[dockNodes]]></Name>
+		<X>-800</X>
+		<Y>1700</Y>
+		<Label>
+			<X>15</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Node</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+			<CollectionInitializer Class="CodeValue">
+				<Code><![CDATA[{ dock1, dock2, dock3, dock4, dock5, dock6, dock7, dock8, dock9, dock10, dock11, dock12 }]]></Code>
+			</CollectionInitializer>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1413469984810</Id>
+		<Name><![CDATA[dockStorages]]></Name>
+		<X>-800</X>
+		<Y>1720</Y>
+		<Label>
+			<X>15</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Storage</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+			<CollectionInitializer Class="CodeValue">
+				<Code><![CDATA[{ storageDock1, storageDock2, storageDock3, storageDock4, storageDock5, storageDock7, storageDock8, storageDock9, storageDock10, storageDock11, storageDock12, storageDock13 }]]></Code>
+			</CollectionInitializer>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1413472086594</Id>
+		<Name><![CDATA[turnPoints]]></Name>
+		<X>-800</X>
+		<Y>1760</Y>
+		<Label>
+			<X>15</X>
+			<Y>1</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Node</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+			<CollectionInitializer Class="CodeValue">
+				<Code><![CDATA[{ turnPoint1, turnPoint2, turnPoint3, turnPoint4, turnPoint5, turnPoint6, turnPoint7, turnPoint8, turnPoint9, turnPoint10, turnPoint11, turnPoint12 }]]></Code>
+			</CollectionInitializer>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1413472550142</Id>
+		<Name><![CDATA[truckPoints]]></Name>
+		<X>-800</X>
+		<Y>1780</Y>
+		<Label>
+			<X>15</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Node</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+			<CollectionInitializer Class="CodeValue">
+				<Code><![CDATA[{ pointDock1, pointDock2, pointDock3, pointDock4, pointDock5, pointDock6, pointDock7, pointDock8, pointDock9, pointDock10, pointDock11, pointDock12 }]]></Code>
+			</CollectionInitializer>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1413848901135</Id>
+		<Name><![CDATA[loadPoints]]></Name>
+		<X>-800</X>
+		<Y>1740</Y>
+		<Label>
+			<X>15</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Node</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+			<CollectionInitializer Class="CodeValue">
+				<Code><![CDATA[{ loadPoint1, loadPoint2, loadPoint3, loadPoint4, loadPoint5, loadPoint6, loadPoint7, loadPoint8, loadPoint9, loadPoint10, loadPoint11, loadPoint12 }]]></Code>
+			</CollectionInitializer>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1413885960976</Id>
+		<Name><![CDATA[cameras]]></Name>
+		<X>-550</X>
+		<Y>-1100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Camera3D</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+			<CollectionInitializer Class="CodeValue">
+				<Code><![CDATA[{ cameraDefault, cameraUnloadingZone, cameraLoadingZone, cameraInsideLoadingZone, cameraTop }]]></Code>
+			</CollectionInitializer>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1422101450082</Id>
+		<Name><![CDATA[unloadWaitMoving]]></Name>
+		<X>-550</X>
+		<Y>1370</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>UnloadingTruck</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1422128574183</Id>
+		<Name><![CDATA[loadWaitMoving]]></Name>
+		<X>-300</X>
+		<Y>1370</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>LoadingTruck</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1422869402771</Id>
+		<Name><![CDATA[columnTitles]]></Name>
+		<X>-300</X>
+		<Y>-3000</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>ShapeText</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+			<CollectionInitializer Class="CodeValue">
+				<Code><![CDATA[{ titleQueue, titleWaitAssembling, titleAssembling, titleWaitLoading }]]></Code>
+			</CollectionInitializer>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1422903715665</Id>
+		<Name><![CDATA[queue]]></Name>
+		<X>-300</X>
+		<Y>-2900</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Order</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1422903732936</Id>
+		<Name><![CDATA[waitAssembling]]></Name>
+		<X>-300</X>
+		<Y>-2880</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Order</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1422903764275</Id>
+		<Name><![CDATA[assembling]]></Name>
+		<X>-300</X>
+		<Y>-2860</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Order</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1422903785645</Id>
+		<Name><![CDATA[waitLoading]]></Name>
+		<X>-300</X>
+		<Y>-2840</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Order</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1553678162237</Id>
+		<Name><![CDATA[colorSamples]]></Name>
+		<X>-700</X>
+		<Y>2040</Y>
+		<Label>
+			<X>11</X>
+			<Y>3</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>ShapeRectangle</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+			<CollectionInitializer Class="CodeValue">
+				<Code><![CDATA[{ colorSample01, colorSample02, colorSample03, colorSample04, colorSample05, colorSample06, colorSample07, colorSample08, colorSample09, colorSample10, colorSample11, colorSample12, colorSample13, colorSample14, colorSample15, colorSample16 }]]></Code>
+			</CollectionInitializer>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1743003651158</Id>
+		<Name><![CDATA[typeStoragePools]]></Name>
+		<X>-300</X>
+		<Y>1950</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>Type</ElementClass>
+			<ValueElementClass>StorageSystem&lt;Pallet&gt;</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1743003812652</Id>
+		<Name><![CDATA[storagePools]]></Name>
+		<X>-300</X>
+		<Y>1920</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>StorageSystem</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+			<CollectionInitializer Class="CodeValue">
+				<Code><![CDATA[{ storagePool1, storagePool2, storagePool3, storagePool4, storagePool5, storagePool6, storagePool7, storagePool8, storagePool9, storagePool10, storagePool11, storagePool12, storagePool13, storagePool14, storagePool15, storagePool16 }]]></Code>
+			</CollectionInitializer>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1745252672016</Id>
+		<Name><![CDATA[storages]]></Name>
+		<X>-300</X>
+		<Y>2100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Storage</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+			<CollectionInitializer Class="CodeValue">
+				<Code><![CDATA[{ storage1, storage2, storage3, storage4, storage5, storage6, storage7, storage8, storage9, storage10, storage11, storage12, storage13, storage14, storage15, storage16 }]]></Code>
+			</CollectionInitializer>
+		</Properties>
+	</Variable>
+</Variables>
