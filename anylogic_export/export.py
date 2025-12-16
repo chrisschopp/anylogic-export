@@ -220,7 +220,7 @@ def watch_for_jar_changes(jar_paths: dict[Path, bool], model_dir: Path) -> None:
         f"Watching for jar changes...{json.dumps({str(k): v for k, v in jar_paths.items()}, indent=4)}"
     )
     for change in watch(
-        *list(jar_paths.keys()), watch_filter=ignore_deleted, rust_timeout=10_000
+        *list(jar_paths.keys()), watch_filter=ignore_deleted, rust_timeout=30_000
     ):
         for _ in change:
             file = Path(_[1])
