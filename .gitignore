@@ -57,3 +57,7 @@ build/
 # Exported model folders
 DistributionCenter_*/*
 !DistributionCenter_*/*_linux.sh
+
+# For testing .alp export
+SupplyChain/
+SupplyChain_*/

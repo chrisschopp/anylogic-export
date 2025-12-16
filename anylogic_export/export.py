@@ -121,7 +121,34 @@ def remove_chrome_reference(file_path: Path) -> None:
         raise typer.Exit(1)
 
 
-def experiment_dir(model_dir: Path) -> Generator[Path, Any, None]:
+def get_experiment_dirs(model_dir: Path, experiments: list[str]) -> list[Path]:
+    """Validate that the experiments exist and get their directories.
+
+    Args:
+        model_dir (Path): The directory containing the AnyLogic model.
+        experiments (list[str]): The experiments passed to the export CLI.
+
+    Raises:
+        ValueError: If the experiments passed to the CLI do not exist for the model.
+
+    Returns:
+        list[Path]: The validated experiment directories.
+    """
+    if dirs := [
+        dir_
+        for dir_ in list(_experiment_dir(model_dir))
+        if str(dir_.name).endswith(tuple(experiments))
+    ]:
+        return dirs
+    else:
+        raise ValueError(
+            f"Experiments: `{experiments}` not found. If these experiments do not exist, "
+            "you may need to pass your experiment name explicitly. "
+            "See --help for more details."
+        )
+
+
+def _experiment_dir(model_dir: Path) -> Generator[Path, Any, None]:
     """Get one or more paths to the model's experiment directories.
 
     Args:
@@ -152,11 +179,7 @@ def remove_chrome_refs_when_files_modified(
         experiments (list[str]): The experiments to run in continuous integration.
     """
     model_dir: Path = abs_path_to_model.parent
-    experiment_dirs: list[Path] = [
-        _
-        for _ in list(experiment_dir(model_dir))
-        if str(_.name).endswith(tuple(experiments))
-    ]
+    experiment_dirs: list[Path] = get_experiment_dirs(model_dir, experiments)
     linux_scripts: list[Path] = [
         linux_script_path(model_dir, _) for _ in experiment_dirs
     ]
@@ -165,6 +188,7 @@ def remove_chrome_refs_when_files_modified(
     )
     jar_paths: dict[Path, bool] = {}
 
+    logger.debug(f"{experiment_dirs=}")
     logger.debug(
         f"Watching for changes in {json.dumps(linux_scripts, default=lambda _: str(_), indent=4)}"
     )
