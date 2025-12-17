@@ -314,8 +314,8 @@ def init(
         # That calls the jar file(s)
         {model_name}_*/model[0-9]*.jar
     """
-    with open(".gitignore", "a+") as f:
-        f.write(dedent(text))
+    with open(".gitignore", "a+b") as f:
+        f.write(bytes(dedent(text), encoding="utf-8"))
 
 
 @app.command()
