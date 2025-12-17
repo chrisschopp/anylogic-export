@@ -29,7 +29,7 @@ dev = [
 anylogic-export = { workspace = true }
 
 [project.scripts]
-anylogic-export = "anylogic_export.export:run"
+anylogic = "anylogic_export.export:app"
 
 [tool.pytest.ini_options]
 markers = ["local: requires an installation of AnyLogic and/or a license and cannot run in CI"]
