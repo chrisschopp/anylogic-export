@@ -3,5 +3,5 @@
   description: "Export a standalone AnyLogic model"
   entry: anylogic
   language: python
-  # files: .*\.(alp|alpx)$Py
+  # files: .*\.(alp|alpx)$Py # TODO: also needs to trigger for a directory for .alpx
   pass_filenames: false

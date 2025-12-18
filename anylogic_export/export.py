@@ -34,7 +34,10 @@ def set_verbosity(
         logger.setLevel(logging.INFO)
 
 
-app = typer.Typer(callback=set_verbosity)
+app = typer.Typer(
+    context_settings={"help_option_names": ["-h", "--help"]},
+    callback=set_verbosity,
+)
 
 logger = logging.getLogger("export_anylogic_model")
 FORMAT = "%(message)s"

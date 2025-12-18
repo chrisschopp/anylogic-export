@@ -1,15 +1,32 @@
-# AnyLogic Export
+# anylogic-export
 
-Show help message.
+A CLI tool for exporting AnyLogic models to standalone Java applications.
+
+Can be used as a [pre-commit](https://pre-commit.com/) (or [prek](https://prek.j178.dev/)) hook to run AnyLogic experiments in a continuous integration pipeline.
+
+## Commands
+
+Show help.
 
 ```bash
-anylogic-export -h
+anylogic -h
 ```
 
-Export an AnyLogic model.
+Initialize an AnyLogic model repository for use with `anylogic-export` as a pre-commit hook.
 
 ```bash
-anylogic-export DistributionCenter/DistributionCenter.alpx
+anylogic init
+```
+
+## Export an AnyLogic model from the terminal
+
+Assumes:
+
+1. There is only one AnyLogic model in the current directory.
+2. The model has an experiment named `CustomExperiment`, the default name for an experiment that doesn't display the model window.
+
+```bash
+anylogic export
 ```
 
 ## Benchmarking
