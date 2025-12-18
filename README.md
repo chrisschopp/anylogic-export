@@ -4,6 +4,12 @@ A CLI tool for exporting AnyLogic models to standalone Java applications.
 
 Can be used as a [pre-commit](https://pre-commit.com/) (or [prek](https://prek.j178.dev/)) hook to run AnyLogic experiments in a continuous integration pipeline.
 
+## Installation
+
+```bash
+uv add anylogic-export
+```
+
 ## Commands
 
 Show help.
@@ -27,6 +33,25 @@ Assumes:
 
 ```bash
 anylogic export
+```
+
+## Prek Quickstart
+
+Create `.pre-commit-config.yaml` in your project's root directory with the following contents:
+
+```yaml
+repos:
+ - repo: https://github.com/chrisschopp/anylogic-export
+   rev: v0.1.0
+   hooks:
+    - id: anylogic-export
+      args: [export, --experiments=CustomExperiment]
+```
+
+Install the hook with:
+
+```bash
+prek install
 ```
 
 ## Benchmarking
