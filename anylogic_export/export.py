@@ -124,12 +124,13 @@ def remove_chrome_reference(file_path: Path) -> None:
         raise typer.Exit(1)
 
 
-def get_experiment_dirs(model_dir: Path, experiments: list[str]) -> list[Path]:
+def get_experiment_dirs(model_dir: Path, experiments: str) -> list[Path]:
     """Validate that the experiments exist and get their directories.
 
     Args:
         model_dir (Path): The directory containing the AnyLogic model.
-        experiments (list[str]): The experiments passed to the export CLI.
+        experiments (list[str]): Comma-separated experiments passed to the export CLI.
+            E.g. `--experiments CustomExperiment,Simulation`
 
     Raises:
         ValueError: If the experiments passed to the CLI do not exist for the model.
@@ -137,15 +138,16 @@ def get_experiment_dirs(model_dir: Path, experiments: list[str]) -> list[Path]:
     Returns:
         list[Path]: The validated experiment directories.
     """
+    experiments_list = experiments.split(",")
     if dirs := [
         dir_
         for dir_ in list(_experiment_dir(model_dir))
-        if str(dir_.name).endswith(tuple(experiments))
+        if str(dir_.name).endswith(tuple(experiments_list))
     ]:
         return dirs
     else:
         raise ValueError(
-            f"Experiments: `{experiments}` not found. If these experiments do not exist, "
+            f"Experiments: `{experiments_list}` not found. If these experiments do not exist, "
             "you may need to pass your experiment name explicitly. "
             "See --help for more details."
         )
@@ -172,14 +174,15 @@ def linux_script_path(model_path: Path, experiment_dir: Path) -> Path:
 
 
 def remove_chrome_refs_when_files_modified(
-    abs_path_to_model: Path, experiments: list[str]
+    abs_path_to_model: Path, experiments: str
 ) -> None:
     """Remove the line that `chmod`s the chrome directory from the Linux scripts
     created during export. This line will cause an error since `chrome/` is gitignored.
 
     Args:
         abs_path_to_model (Path): Absolute path to the model being exported.
-        experiments (list[str]): The experiments to run in continuous integration.
+        experiments (str): Comma-separated experiments to run in continuous integration.
+            E.g. `--experiments CustomExperiment,Simulation`
     """
     model_dir: Path = abs_path_to_model.parent
     experiment_dirs: list[Path] = get_experiment_dirs(model_dir, experiments)
@@ -314,7 +317,7 @@ def init(
     Args:
         model_name (str | None): If multiple AnyLogic models are present in the parent folder, the model to export must be passed manually.\b
         If None, the only model found will be exported. Defaults to None.
-        experiments (str | None): The experiment(s) to export. If passing more than one, use commas to separate them.
+        experiments (str | None): Comma-separated experiments to export from the model.
             E.g. `--experiments CustomExperiment,Simulation`
     """
     model_path = discover_model_path()
@@ -352,6 +355,7 @@ def init_config(model_name: str, experiments: str) -> None:
     Args:
         model_name (str): The directory holding the AnyLogic model and its assets.
         experiments (str): Comma-separated experiments to export from the model.
+            E.g. `--experiments CustomExperiment,Simulation`
     """
     text = f"""repos:
   - repo: https://github.com/chrisschopp/anylogic-export
@@ -383,16 +387,15 @@ def export(
             help="Path to AnyLogic Professional installation; defaults to auto-detected path.",
         ),
     ],
-    experiments: Annotated[
-        list[str],
-        Option("--experiments", "-e", default_factory=lambda: ["CustomExperiment"]),
-    ],
+    experiments: Annotated[str, Option("--experiments", "-e")] = "CustomExperiment",
 ) -> None:
     """Export an AnyLogic model to a standalone executable.
 
     Args:
         path_to_model (str): Relative path to an AnyLogic model (.alp or .alpx).
         anylogic_dir (Path | None): AnyLogic Professional directory. Defaults to None.
+        experiments (list[str]): Comma-separated experiments passed to the export CLI. Defaults to `"CustomExperiment"`.
+            E.g. `--experiments CustomExperiment,Simulation`
 
     Raises:
         ValueError: If invalid path to directory containing `AnyLogix.exe`.
