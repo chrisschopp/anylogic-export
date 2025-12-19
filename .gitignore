@@ -61,3 +61,6 @@ DistributionCenter_*/*
 # For testing .alp export
 SupplyChain/
 SupplyChain_*/
+
+# For testing init
+.pre-commit-config.yaml

@@ -321,23 +321,26 @@ def init(
         f.write(bytes(dedent(text), encoding="utf-8"))
 
 @app.command()
-def pre(experiments: list[str], overwrite: bool) -> None:
-    p = Path(".").glob(".pre-commit-config.y*")
-    body = f"""
+def init_config(model_dir: str, experiments: list[str]) -> None:
+    """Initialize a `.pre-commit-config.yaml` for use with an AnyLogic project.
+
+    The `anylogic-export` hook will only run when a change is made to a file in the 
+    model folder.
+
+    Args:
+        model_dir (str): The directory holding the AnyLogic model and its assets.
+        experiments (list[str]): The experiments to export from the model.
+    """    
+    text = f"""repos:
   - repo: https://github.com/chrisschopp/anylogic-export
     rev: v0.1.0
     hooks:
       - id: anylogic-export
-        args: [export, --experiments={experiments[0]}]
-        files: {experiments[0]}/*
+        args: [export, --experiments={",".join(experiments)}]
+        files: {model_dir}/*
     """
-    if p := tuple(p)[0]:
-        with open(p, "a") as f:
-            f.write(dedent(body))
-    if not p or overwrite:
-        header = "repos:"
-        with open(".pre-commit-config.yaml", "w") as f:
-            f.write(dedent(header + body))
+    with open(".pre-commit-config.yaml", "w") as f:
+        f.write(dedent(text))
 
 @app.command()
 def export(
