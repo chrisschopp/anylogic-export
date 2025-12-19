@@ -329,17 +329,15 @@ def pre(experiments: list[str], overwrite: bool) -> None:
     hooks:
       - id: anylogic-export
         args: [export, --experiments={experiments[0]}]
-        files:
+        files: {experiments[0]}/*
     """
-    files = "/*, ".join(experiments)
-    contents = body
     if p := tuple(p)[0]:
         with open(p, "a") as f:
-            f.write(dedent(contents))
+            f.write(dedent(body))
     if not p or overwrite:
         header = "repos:"
         with open(".pre-commit-config.yaml", "w") as f:
-            f.write(dedent(header + contents))
+            f.write(dedent(header + body))
 
 @app.command()
 def export(
