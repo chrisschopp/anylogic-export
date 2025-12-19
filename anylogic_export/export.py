@@ -298,11 +298,10 @@ def discover_model_path() -> Path:
 def init(
     model_name: Annotated[str | None, Option("--model_name", "-n")] = None,
     experiments: Annotated[
-        str | None,
-        Option("--experiments", "-e", default_factory=lambda: ["CustomExperiment"]),
-    ] = None,
+        str | None, Option("--experiments", "-e")
+    ] = "CustomExperiment",
 ) -> None:
-    """Prepare the AnyLogic model for use in a continuous integration pipeline. Executes all commands in the 
+    """Prepare the AnyLogic model for use in a continuous integration pipeline. Executes all commands in the
     `init*` namespace instead of calling each command individually.
 
     This does the following tailored to a specific AnyLogic model:
@@ -344,7 +343,7 @@ def init_gitignore(model_name: str) -> None:
 
 
 @app.command()
-def init_config(model_name: str, experiments: list[str]) -> None:
+def init_config(model_name: str, experiments: str) -> None:
     """Initialize a `.pre-commit-config.yaml` for use with an AnyLogic project.
 
     The `anylogic-export` hook will only run when a change is made to a file in the
@@ -352,14 +351,14 @@ def init_config(model_name: str, experiments: list[str]) -> None:
 
     Args:
         model_name (str): The directory holding the AnyLogic model and its assets.
-        experiments (list[str]): The experiments to export from the model.
+        experiments (str): Comma-separated experiments to export from the model.
     """
     text = f"""repos:
   - repo: https://github.com/chrisschopp/anylogic-export
     rev: v0.1.0
     hooks:
       - id: anylogic-export
-        args: [export, --experiments={",".join(experiments)}]
+        args: [export, --experiments={experiments}]
         files: {model_name}/*
     """
     with open(".pre-commit-config.yaml", "w") as f:
