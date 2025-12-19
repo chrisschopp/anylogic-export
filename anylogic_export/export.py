@@ -297,9 +297,15 @@ def discover_model_path() -> Path:
     return model_paths[0]
 
 
+def discover_model_name() -> str:
+    return discover_model_path().parent
+
+
 @app.command()
 def init(
-    model_name: Annotated[str | None, Option("--model_name", "-n")] = None,
+    model_name: Annotated[
+        str | None, Option("--model_name", "-n", default_factory=discover_model_name)
+    ],
     experiments: Annotated[
         str | None, Option("--experiments", "-e")
     ] = "CustomExperiment",
@@ -316,12 +322,10 @@ def init(
 
     Args:
         model_name (str | None): If multiple AnyLogic models are present in the parent folder, the model to export must be passed manually.\b
-        If None, the only model found will be exported. Defaults to None.
+        If None, the only model found will be exported. If passing a model name that contains spaces, wrap it in quotation marks. Defaults to None.
         experiments (str | None): Comma-separated experiments to export from the model.
             E.g. `--experiments CustomExperiment,Simulation`
     """
-    model_path = discover_model_path()
-    model_name = model_name or model_path.parent
     init_gitignore(model_name)
     init_config(model_name, experiments)
 
@@ -392,7 +396,7 @@ def export(
     """Export an AnyLogic model to a standalone executable.
 
     Args:
-        path_to_model (str): Relative path to an AnyLogic model (.alp or .alpx).
+        path_to_model (str): Relative path to an AnyLogic model (.alp or .alpx). If the model name contains spaces, wrap it in quotation marks.
         anylogic_dir (Path | None): AnyLogic Professional directory. Defaults to None.
         experiments (list[str]): Comma-separated experiments passed to the export CLI. Defaults to `"CustomExperiment"`.
             E.g. `--experiments CustomExperiment,Simulation`
