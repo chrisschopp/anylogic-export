@@ -46,6 +46,7 @@ repos:
    hooks:
     - id: anylogic-export
       args: [export, --experiments=CustomExperiment]
+      files: ModelName/*
 ```
 
 Install the hook with:

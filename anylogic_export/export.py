@@ -320,6 +320,26 @@ def init(
     with open(".gitignore", "a+b") as f:
         f.write(bytes(dedent(text), encoding="utf-8"))
 
+@app.command()
+def pre(experiments: list[str], overwrite: bool) -> None:
+    p = Path(".").glob(".pre-commit-config.y*")
+    body = f"""
+  - repo: https://github.com/chrisschopp/anylogic-export
+    rev: v0.1.0
+    hooks:
+      - id: anylogic-export
+        args: [export, --experiments={experiments[0]}]
+        files:
+    """
+    files = "/*, ".join(experiments)
+    contents = body
+    if p := tuple(p)[0]:
+        with open(p, "a") as f:
+            f.write(dedent(contents))
+    if not p or overwrite:
+        header = "repos:"
+        with open(".pre-commit-config.yaml", "w") as f:
+            f.write(dedent(header + contents))
 
 @app.command()
 def export(
