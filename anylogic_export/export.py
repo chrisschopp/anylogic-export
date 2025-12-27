@@ -11,7 +11,7 @@ import typer
 from rich.logging import RichHandler
 from typer import Argument, Option
 from typing_extensions import Annotated
-from watchfiles import Change, watch
+from watchfiles import Change, DefaultFilter, watch
 
 
 def set_verbosity(
@@ -138,22 +138,23 @@ def get_experiment_dirs(model_dir: Path, experiments: str) -> list[Path]:
     Returns:
         list[Path]: The validated experiment directories.
     """
-    experiments_list = experiments.split(",")
-    if dirs := [
-        dir_
-        for dir_ in list(_experiment_dir(model_dir))
-        if str(dir_.name).endswith(tuple(experiments_list))
+    discovered_exp: list[Path] = list(_discover_experiments(model_dir))
+    cli_exp: list[str] = tuple(experiments.split(","))
+    if validated_exp := [
+        dir_ for dir_ in discovered_exp if str(dir_.name).endswith(cli_exp)
     ]:
-        return dirs
+        return validated_exp
+    elif not discovered_exp:
+        return [model_dir / f"{model_dir.name}_{exp}" for exp in cli_exp]
     else:
-        raise ValueError(
-            f"Experiments: `{experiments_list}` not found. If these experiments do not exist, "
+        logger.warning(
+            f"Experiments: `{cli_exp}` not found. If these experiments do not exist, "
             "you may need to pass your experiment name explicitly. "
             "See --help for more details."
         )
 
 
-def _experiment_dir(model_dir: Path) -> Generator[Path, Any, None]:
+def _discover_experiments(model_dir: Path) -> Generator[Path, Any, None]:
     """Get one or more paths to the model's experiment directories.
 
     Args:
@@ -170,7 +171,12 @@ def _experiment_dir(model_dir: Path) -> Generator[Path, Any, None]:
 
 def linux_script_path(model_path: Path, experiment_dir: Path) -> Path:
     """Get the Linux shell script created by AnyLogic during the export."""
-    return experiment_dir / f"{model_path.name}_linux.sh"
+    return experiment_dir.parent.parent / experiment_dir.name / f"{model_path.name}_linux.sh"
+
+
+class LinuxScriptFilter(DefaultFilter):
+    def __call__(self, change: Change, path: str) -> bool:
+        return super().__call__(change, path) and path.endswith(".sh") and "CustomExperiment" in path
 
 
 def remove_chrome_refs_when_files_modified(
@@ -192,13 +198,16 @@ def remove_chrome_refs_when_files_modified(
     chrome_ref_removed: dict[Path, bool] = dict(
         zip(linux_scripts, [False] * len(linux_scripts))
     )
+    logger.debug(f"{chrome_ref_removed=}")
     jar_paths: dict[Path, bool] = {}
 
     logger.debug(f"{experiment_dirs=}")
     logger.debug(
         f"Watching for changes in {json.dumps(linux_scripts, default=lambda _: str(_), indent=4)}"
     )
-    for change in watch(*linux_scripts, rust_timeout=10_000):
+    for change in watch(
+        model_dir.parent, watch_filter=LinuxScriptFilter(), rust_timeout=20_000
+    ):
         for _ in change:
             file = Path(_[1])
             if not chrome_ref_removed[file]:
