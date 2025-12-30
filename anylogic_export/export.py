@@ -3,6 +3,7 @@ import logging
 import platform
 import re
 import subprocess
+from functools import partial
 from pathlib import Path
 from textwrap import dedent
 from typing import Any, Generator
@@ -124,13 +125,13 @@ def remove_chrome_reference(file_path: Path) -> None:
         raise typer.Exit(1)
 
 
-def get_experiment_dirs(model_dir: Path, experiments: str) -> list[Path]:
+def get_experiment_dirs(model_dir: Path, cli_exp: tuple[str]) -> list[Path]:
     """Validate that the experiments exist and get their directories.
 
     Args:
         model_dir (Path): The directory containing the AnyLogic model.
-        experiments (list[str]): Comma-separated experiments passed to the export CLI.
-            E.g. `--experiments CustomExperiment,Simulation`
+        cli_exp (tuple[str]): Experiments passed to the export CLI.
+            E.g. `("CustomExperiment", "Simulation")`
 
     Raises:
         ValueError: If the experiments passed to the CLI do not exist for the model.
@@ -139,7 +140,6 @@ def get_experiment_dirs(model_dir: Path, experiments: str) -> list[Path]:
         list[Path]: The validated experiment directories.
     """
     discovered_exp: list[Path] = list(_discover_experiments(model_dir))
-    cli_exp: list[str] = tuple(experiments.split(","))
     if validated_exp := [
         dir_ for dir_ in discovered_exp if str(dir_.name).endswith(cli_exp)
     ]:
@@ -171,12 +171,22 @@ def _discover_experiments(model_dir: Path) -> Generator[Path, Any, None]:
 
 def linux_script_path(model_path: Path, experiment_dir: Path) -> Path:
     """Get the Linux shell script created by AnyLogic during the export."""
-    return experiment_dir.parent.parent / experiment_dir.name / f"{model_path.name}_linux.sh"
+    return (
+        experiment_dir.parent.parent
+        / experiment_dir.name
+        / f"{model_path.name}_linux.sh"
+    )
 
 
 class LinuxScriptFilter(DefaultFilter):
-    def __call__(self, change: Change, path: str) -> bool:
-        return super().__call__(change, path) and path.endswith(".sh") and "CustomExperiment" in path
+    """Only watch for changes to Linux scripts in the exported experiment directories."""
+
+    def __call__(self, change: Change, path: str, experiments: tuple[str]) -> bool:
+        return (
+            super().__call__(change, path)
+            and path.endswith(".sh")
+            and any(_ in path for _ in experiments)
+        )
 
 
 def remove_chrome_refs_when_files_modified(
@@ -191,7 +201,8 @@ def remove_chrome_refs_when_files_modified(
             E.g. `--experiments CustomExperiment,Simulation`
     """
     model_dir: Path = abs_path_to_model.parent
-    experiment_dirs: list[Path] = get_experiment_dirs(model_dir, experiments)
+    cli_exp: list[str] = tuple(experiments.split(","))
+    experiment_dirs: list[Path] = get_experiment_dirs(model_dir, cli_exp)
     linux_scripts: list[Path] = [
         linux_script_path(model_dir, _) for _ in experiment_dirs
     ]
@@ -206,7 +217,9 @@ def remove_chrome_refs_when_files_modified(
         f"Watching for changes in {json.dumps(linux_scripts, default=lambda _: str(_), indent=4)}"
     )
     for change in watch(
-        model_dir.parent, watch_filter=LinuxScriptFilter(), rust_timeout=20_000
+        model_dir.parent,
+        watch_filter=partial(LinuxScriptFilter(), experiments=cli_exp),
+        rust_timeout=20_000,
     ):
         for _ in change:
             file = Path(_[1])
