@@ -145,7 +145,7 @@ def get_experiment_dirs(model_dir: Path, cli_exp: tuple[str]) -> list[Path]:
     ]:
         return validated_exp
     elif not discovered_exp:
-        return [model_dir / f"{model_dir.name}_{exp}" for exp in cli_exp]
+        return [model_dir.parent / f"{model_dir.name}_{exp}" for exp in cli_exp]
     else:
         logger.warning(
             f"Experiments: `{cli_exp}` not found. If these experiments do not exist, "
@@ -169,13 +169,12 @@ def _discover_experiments(model_dir: Path) -> Generator[Path, Any, None]:
             yield contents
 
 
-def linux_script_path(model_path: Path, experiment_dir: Path) -> Path:
+def linux_script_path(model_dir: Path, experiment_dir: Path) -> Path:
     """Get the Linux shell script created by AnyLogic during the export."""
-    return (
-        experiment_dir.parent.parent
-        / experiment_dir.name
-        / f"{model_path.name}_linux.sh"
-    )
+    experiment_dir.mkdir(exist_ok=True)
+    file_path = experiment_dir / f"{model_dir.name}_linux.sh"
+    file_path.touch()
+    return file_path
 
 
 class LinuxScriptFilter(DefaultFilter):
@@ -253,7 +252,10 @@ def get_jar_files(linux_script_path: Path) -> list[Path]:
     pattern_jar_file = r"(?:\b|^)(?:[a-zA-Z0-9_/.-]+/)?model\d*\.jar\b"
     jars = re.findall(pattern_jar_file, java_command)
     experiment_dir = linux_script_path.parent
-    return [experiment_dir / _ for _ in jars]
+    jar_paths =[experiment_dir / _ for _ in jars]
+    for path in jar_paths:
+        path.touch()
+    return jar_paths
 
 
 def ignore_deleted(change: Change, path: str) -> bool:
