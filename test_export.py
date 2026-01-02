@@ -47,7 +47,7 @@ def test_export() -> None:
     
     This makes sure it works the first time `export` is run.
     """
-    for experiment in EXPERIMENTS
+    for experiment in EXPERIMENTS:
         shutil.rmtree(f"{TEST_MODEL}_{experiment}")
     subprocess.run(
         ["python", "./anylogic_export/export.py", "-v", "export"],

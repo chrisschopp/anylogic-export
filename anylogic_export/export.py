@@ -177,17 +177,6 @@ def linux_script_path(model_dir: Path, experiment_dir: Path) -> Path:
     return file_path
 
 
-class LinuxScriptFilter(DefaultFilter):
-    """Only watch for changes to Linux scripts in the exported experiment directories."""
-
-    def __call__(self, change: Change, path: str, experiments: tuple[str]) -> bool:
-        return (
-            super().__call__(change, path)
-            and path.endswith(".sh")
-            and any(_ in path for _ in experiments)
-        )
-
-
 def remove_chrome_refs_when_files_modified(
     abs_path_to_model: Path, experiments: str
 ) -> None:
@@ -215,11 +204,7 @@ def remove_chrome_refs_when_files_modified(
     logger.debug(
         f"Watching for changes in {json.dumps(linux_scripts, default=lambda _: str(_), indent=4)}"
     )
-    for change in watch(
-        model_dir.parent,
-        watch_filter=partial(LinuxScriptFilter(), experiments=cli_exp),
-        rust_timeout=20_000,
-    ):
+    for change in watch(*linux_scripts, rust_timeout=20_000):
         for _ in change:
             file = Path(_[1])
             if not chrome_ref_removed[file]:
@@ -252,7 +237,7 @@ def get_jar_files(linux_script_path: Path) -> list[Path]:
     pattern_jar_file = r"(?:\b|^)(?:[a-zA-Z0-9_/.-]+/)?model\d*\.jar\b"
     jars = re.findall(pattern_jar_file, java_command)
     experiment_dir = linux_script_path.parent
-    jar_paths =[experiment_dir / _ for _ in jars]
+    jar_paths = [experiment_dir / _ for _ in jars]
     for path in jar_paths:
         path.touch()
     return jar_paths
