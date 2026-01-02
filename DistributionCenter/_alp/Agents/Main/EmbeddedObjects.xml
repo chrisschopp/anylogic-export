@@ -1647,7 +1647,7 @@ agent.group2D.setVisible(false);]]></Code>
 			<Parameter>
 				<Name><![CDATA[resourceSets]]></Name>
 				<Value Class="CodeValue">
-					<Code><![CDATA[{ 
+					<Code><![CDATA[{
   { dockLoading }
 }]]></Code>
 				</Value>
@@ -3397,7 +3397,7 @@ agent.group3D.setVisible(false);]]></Code>
 			<Parameter>
 				<Name><![CDATA[onExit]]></Name>
 				<Value Class="CodeValue">
-					<Code><![CDATA[for( Order order: container.orders ) 
+					<Code><![CDATA[for( Order order: container.orders )
 	container.dock.orders.remove(order);
 ]]></Code>
 				</Value>
@@ -6068,7 +6068,7 @@ recalculateWaitForDockStorage();]]></Code>
 			<Parameter>
 				<Name><![CDATA[resourceSets]]></Name>
 				<Value Class="CodeValue">
-					<Code><![CDATA[{ 
+					<Code><![CDATA[{
   { dockUnloading }
 }]]></Code>
 				</Value>
@@ -8444,11 +8444,11 @@ Dock dock = truck.dock;
 
 if( truck.loadPallet()) {
 	waitForLoading.free(agent.truck);
-	
+
 	dock.processingForklift.inUse = false;
 	dock.processingForklift = null;
-	
-	for( Order order : truck.orders ) 
+
+	for( Order order : truck.orders )
 		send("loaded", order);
 }
 

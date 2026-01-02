@@ -1,7 +1,7 @@
 #!/bin/sh
-# 
+#
 # Run AnyLogic Experiment
-# 
+#
 DIR_BACKUP_XJAL=$(pwd)
 SCRIPT_DIR_XJAL=$(dirname "$0")
 export AL_OMNIVERSE_CONNECTOR_PATH=$(realpath $SCRIPT_DIR_XJAL/omniverse-connector/AnyLogicOmniverseConnector)

@@ -869,7 +869,7 @@ engine.stop();]]></Code>
 				<Rotation>0.0</Rotation>
 				<Color>-16777216</Color>
 				<Text><![CDATA[This is a model of a distribution center
-operation. The main processes are: 
+operation. The main processes are:
 
 Unloading:
 A truck delivers pallets to an available
@@ -891,15 +891,15 @@ additional storage zone), and the
 main storage has the required
 number of pallets of the required
 types. The order is assembled by
-forklift trucks. 
+forklift trucks.
 
 Loading:
-Once the orders are completely 
+Once the orders are completely
 assembled, a truck is assigned to
 the loading dock where they were
-assebled to receive the order. 
+assebled to receive the order.
 A forklift will load the orders in
-the trucks from the assembly area. 
+the trucks from the assembly area.
 The total number of orders for one
 truck must take up at least half
 of its capacity.]]></Text>

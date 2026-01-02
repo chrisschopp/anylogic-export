@@ -7,7 +7,7 @@
 		<Id>1409238359393</Id>
 		<Name><![CDATA[DistributionCenter]]></Name>
 		<Description><![CDATA[This is a model of a distribution center operation. The main processes are:
-Unloading: A truck delivers pallets to an available unloading dock. Pallets are then unloaded from the truck using a forklift and placed in the receiving dock area. Then other forklifts move the pallets to the main storage racks. 
+Unloading: A truck delivers pallets to an available unloading dock. Pallets are then unloaded from the truck using a forklift and placed in the receiving dock area. Then other forklifts move the pallets to the main storage racks.
 Assembly: An order is assembled from pallets which can be of same or different types. An order can be assembled only if the required pallets can be placed in the assembly area near the docks (or, if there is not enough space there, in the additional storage zone), and the main storage has the required number of pallets of the required types. The order is assembled by forklift trucks.
 Loading: Once the orders are completely  assembled, a truck is assigned to the loading dock where they were assembled to receive the order.  A forklift will load the orders in the trucks from the assembly area.  The total number of orders for one truck must take up at least half of its capacity. ]]></Description>
 		<EngineVersion>6</EngineVersion>

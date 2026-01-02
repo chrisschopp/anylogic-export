@@ -3,7 +3,7 @@ int getOrdersCapacity()
 int cap = 0;
 for (Order order : orders) {
 	cap = cap + order.size;
-}	
+}
 return cap;
 /*ALCODEEND*/}
 
@@ -17,4 +17,3 @@ boolean loadPallet()
 processedPallets++;
 return getOrdersCapacity() == processedPallets;
 /*ALCODEEND*/}
-

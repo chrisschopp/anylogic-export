@@ -7,7 +7,7 @@ for (Order order : queue) {
 	if (!order.inState(order.waitAtQueue)) continue;
 	if (findDock(order) == null) continue;
 	if (!enoughPalletsForOrder(order)) continue;
-	return order; 
+	return order;
 }
 return null;
 /*ALCODEEND*/}
@@ -24,7 +24,7 @@ return true;
 double moveFromStorageToDock(Dock dock)
 {/*ALCODESTART::1413738420219*/
 for (Iterator<Order> it = standByStorage.orders.iterator(); it.hasNext();) {
-    Order order = it.next();   
+    Order order = it.next();
 	if (dock.spaceAvailable() < order.size)
 		continue;
 
@@ -51,14 +51,14 @@ for(Dock dock : loadDocks) {
 		continue;
 	if( dock.isOccupied )
 		continue;
-	
+
 	int ordersCapacity = 0;
 	for( Order order : dock.orders ) {
 		if( order.size > truckCapacity )
 			continue;
-		ordersCapacity += order.size; 
+		ordersCapacity += order.size;
 	}
-	
+
 	if ( ordersCapacity > bestCapacity ) {
 		if( ordersCapacity >= 0.5 * truckCapacity ) {
 			bestCapacity = ordersCapacity;
@@ -115,7 +115,7 @@ for (Order order : dock.orders) {
 			p.truck = truck;
 			startLoading.take(p);
 		}
-	}	
+	}
 }
 /*ALCODEEND*/}
 
@@ -149,7 +149,7 @@ return false;
 
 boolean continueMoving(Pallet pallet,Forklift unit)
 {/*ALCODESTART::1418651296989*/
-if (!unit.inUse 
+if (!unit.inUse
 	|| pallet.seizedForklift == null) {
 	return false;
 } else return pallet.seizedForklift == unit;
@@ -157,7 +157,7 @@ if (!unit.inUse
 
 boolean chooseForkliftsForMove(Pallet pallet,Forklift unit,int forkliftLimit,ResourceHandler target)
 {/*ALCODESTART::1418712702952*/
-if (unit.inUse || pallet.seizedForklift != null) 
+if (unit.inUse || pallet.seizedForklift != null)
 	return false;
 
 if (target.releaseUnused(unit, forkliftLimit))
@@ -168,7 +168,7 @@ if (target.seizeForklift(unit, forkliftLimit)) {
 	return true;
 }
 
-return false;  
+return false;
 
 
 /*ALCODEEND*/}
@@ -188,7 +188,7 @@ if (lastOrderId == 0)
 	typeChartHandle();
 if (lastOrderId == 9999)
 	lastOrderId = 0;
-	
+
 
 int s = 0;
 for( int capacity : capacities)
@@ -205,7 +205,7 @@ else queue.add(order);
 
 for (int i = 0; i < palletTypesNum; i++) {
 	types.get(i).claimed += order.capacities[i];
-}		
+}
 /*ALCODEEND*/}
 
 double getControlY()
@@ -233,7 +233,7 @@ if (order == null) return null;
 Dock best = null;
 for (Dock dock : loadDocks) {
 	int spaceAvailable = dock.spaceAvailable();
-	if (spaceAvailable >= order.size 
+	if (spaceAvailable >= order.size
 		&& (best == null || spaceAvailable >= best.spaceAvailable())) {
 		best = dock;
 	}
@@ -250,12 +250,12 @@ double typeChartHandle()
 for( int i = 1; i < palletTypesNum; i++ ) {
 	amountOfPalletsForEachType.addDataItem(new DataItem() {
 			private int color;
-			
+
 			@Override
 			public void update() {
 				this.setValue(typesSizes(color));
 			}
-			
+
 			DataItem setColor(int c) {
 				color = c;
 				return this;
@@ -277,7 +277,7 @@ while (capacity > 0) {
 		int c = uniform_discr(0, capacity);
 		orderCapacities[i] += c;
 		capacity -= c;
-}	
+}
 /*ALCODEEND*/}
 
 double increaseCapacity(int index)
@@ -290,21 +290,21 @@ double decreaseCapacity(int i)
 {/*ALCODESTART::1419334802753*/
 if (sumCapacities() > minOrderSize  && orderCapacities[i] > 0)
 	orderCapacities[i]--;
-	
+
 /*ALCODEEND*/}
 
 int sumCapacities()
 {/*ALCODESTART::1419334829094*/
 int sum = 0;
 for (int i : orderCapacities)
-	sum += i; 
+	sum += i;
 return sum;
 /*ALCODEEND*/}
 
 boolean checkUnloadAnyMoving()
 {/*ALCODESTART::1422101513512*/
 boolean unloadAnyMoving = toUnloadStart.isBlocked() || fromUnloadStart.isBlocked();
-if (unloadWaitMoving.size() == 0 || unloadAnyMoving) 
+if (unloadWaitMoving.size() == 0 || unloadAnyMoving)
 	return false;
 
 UnloadingTruck truck = unloadWaitMoving.get(0);
@@ -314,15 +314,15 @@ if (truck.processedPallets > 0) { // move from dock
 	holdToUnload.unblock();
 }
 
-return true; 
- 
+return true;
+
 
 /*ALCODEEND*/}
 
 boolean checkLoadAnyMoving()
 {/*ALCODESTART::1422128574185*/
 boolean loadAnyMoving = toLoadStart.isBlocked() || fromLoadStart.isBlocked();
-if (loadWaitMoving.size() == 0 || loadAnyMoving) 
+if (loadWaitMoving.size() == 0 || loadAnyMoving)
 	return false;
 
 LoadingTruck truck = loadWaitMoving.get(0);
@@ -332,8 +332,8 @@ if (truck.processedPallets > 0) { // move from dock
 } else { // move to dock
 	holdToLoad.unblock();
 }
-return true; 
- 
+return true;
+
 
 /*ALCODEEND*/}
 
@@ -377,4 +377,3 @@ Color colors(int index)
 {/*ALCODESTART::1553678256567*/
 return colorSamples.get(index).getFillColor();
 /*ALCODEEND*/}
-

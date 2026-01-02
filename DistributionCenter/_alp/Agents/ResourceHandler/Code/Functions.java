@@ -1,6 +1,6 @@
 boolean seizeForklift(Forklift unit,int limit)
 {/*ALCODESTART::1422816709017*/
-if (usedForklifts.size() < limit 
+if (usedForklifts.size() < limit
 	|| usedForklifts.contains(unit)) {
 	unit.inUse = true;
 	usedForklifts.add(unit);
@@ -21,9 +21,8 @@ boolean releaseUnused(Forklift unit,int limit)
 if (usedForklifts.size() > limit) {
 	if (usedForklifts.contains(unit))
 		releaseForklift(unit);
-	return true;	
+	return true;
 }
 
 return false;
 /*ALCODEEND*/}
-

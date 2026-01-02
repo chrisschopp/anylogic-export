@@ -21,4 +21,3 @@ double unreserve(Pallet p)
 {/*ALCODESTART::1422182786794*/
 reserved.remove(p);
 /*ALCODEEND*/}
-

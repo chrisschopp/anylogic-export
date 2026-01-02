@@ -4155,7 +4155,7 @@
 				<Height>50</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-8272897</FillColor>
-				<FillColorCode>selectedViewArea == view3D ? 
+				<FillColorCode>selectedViewArea == view3D ?
 	dodgerBlue : new Color(129, 195, 255)</FillColorCode>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>
@@ -4209,7 +4209,7 @@
 				<Height>50</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-8272897</FillColor>
-				<FillColorCode>selectedViewArea == view2D ? 
+				<FillColorCode>selectedViewArea == view2D ?
 	dodgerBlue : new Color(129, 195, 255)</FillColorCode>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>
@@ -4263,7 +4263,7 @@
 				<Height>50</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-8272897</FillColor>
-				<FillColorCode>selectedViewArea == viewLogic ? 
+				<FillColorCode>selectedViewArea == viewLogic ?
 	dodgerBlue : new Color(129, 195, 255)</FillColorCode>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>
@@ -4317,7 +4317,7 @@
 				<Height>50</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-8272897</FillColor>
-				<FillColorCode>selectedViewArea == viewMetrics ? 
+				<FillColorCode>selectedViewArea == viewMetrics ?
 	dodgerBlue : new Color(129, 195, 255)</FillColorCode>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>
@@ -4371,7 +4371,7 @@
 				<Height>50</Height>
 				<Rotation>0.0</Rotation>
 				<FillColor>-8272897</FillColor>
-				<FillColorCode>selectedViewArea == viewOrders ? 
+				<FillColorCode>selectedViewArea == viewOrders ?
 	dodgerBlue : new Color(129, 195, 255)</FillColorCode>
 				<FillMaterial>null</FillMaterial>
 			</Rectangle>
@@ -38865,7 +38865,7 @@ window3d.setCamera(cameraLoadingZone, false, 1000);</OnClickCode>
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-9404272</Color>
-		<Text><![CDATA[Moving from the storage 
+		<Text><![CDATA[Moving from the storage
 to a loading dock]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
@@ -40256,7 +40256,7 @@ the maximum of order size]]></Text>
 				<ZHeight>10</ZHeight>
 				<LineWidth>2</LineWidth>
 				<LineColor>-16777216</LineColor>
-				<LineColorCode>( sumCapacities() &gt; minOrderSize 
+				<LineColorCode>( sumCapacities() &gt; minOrderSize
 &amp;&amp; orderCapacities[index] &gt; 0) ? black : silver</LineColorCode>
 				<LineMaterial>null</LineMaterial>
 				<LineStyle>SOLID</LineStyle>
@@ -41755,7 +41755,7 @@ if( sum &lt; minOrderSize || sum &gt; maxOrderSize) {
 	groupCheck.setVisible(false);
 	exclamation.setVisible(true);
 } else {
-	for (int i = 0; i &lt; n; i++) 
+	for (int i = 0; i &lt; n; i++)
 		createOrder(orderCapacities, true);
 	groupCheck.setVisible(true);
 }

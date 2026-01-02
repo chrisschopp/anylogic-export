@@ -1,3 +1,7 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![prek](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/j178/prek/master/docs/assets/badge-v0.json)](https://github.com/j178/prek)
+[![PyPi version](https://img.shields.io/pypi/v/anylogic-export)](https://pypi.org/project/anylogic-export/)
+
 # anylogic-export
 
 A CLI tool for exporting AnyLogic models to standalone Java applications.
@@ -6,8 +10,16 @@ Can be used as a [pre-commit](https://pre-commit.com/) (or [prek](https://prek.j
 
 ## Installation
 
+To install from PyPI using [uv](https://docs.astral.sh/uv/), run:
+
 ```bash
 uv add anylogic-export
+```
+
+Alternatively, to install with pip, run:
+
+```bash
+pip install anylogic-export
 ```
 
 ## Commands

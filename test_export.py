@@ -44,7 +44,7 @@ def test_bad_anylogic_path(anylogic_dir: str) -> None:
 @pytest.mark.local
 def test_export() -> None:
     """Test export after ensuring there are no exported experiment directories.
-    
+
     This makes sure it works the first time `export` is run.
     """
     for experiment in EXPERIMENTS:

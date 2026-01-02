@@ -4,16 +4,16 @@ if( orders.size()  < ordersListMaxLength ) {
 	int capacity = uniform_discr(minOrderSize,
 								 maxOrderSize);
 	int[] capacities = new int[palletTypesNum];
-	
+
 	while (capacity > 0) {
 		int i = uniform_discr(0, palletTypesNum - 1);
 		int c = uniform_discr(0, capacity);
 		capacities[i] += c;
 		capacity -= c;
 	}
-	
+
 	createOrder(capacities, false);
-} 
+}
 /*ALCODEEND*/}
 
 void maybeStartAssembling()
@@ -32,7 +32,7 @@ if (order != null) {
 			p.order = order;
 			p.dock = dock;
 			enterPallet.take(p);
-		}		
+		}
 	}
 }
 /*ALCODEEND*/}
@@ -42,4 +42,3 @@ void hideCheck()
 groupCheck.setVisible(false);
 exclamation.setVisible(false);
 /*ALCODEEND*/}
-

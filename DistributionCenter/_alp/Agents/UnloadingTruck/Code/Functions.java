@@ -8,4 +8,3 @@ boolean unloadPallet()
 processedPallets++;
 return processedPallets == capacity;
 /*ALCODEEND*/}
-
