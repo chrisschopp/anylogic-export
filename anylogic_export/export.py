@@ -54,6 +54,8 @@ def default_path_to_anylogic() -> Path:
             return Path("C:/Program Files/AnyLogic 8.9 Professional")
         case "Linux":
             return Path("/opt/AnyLogic") #! Untested, adding for CI
+        case "Darwin":
+            return Path("/Applications/AnyLogic 8 Professional.app") #! Untested
         case _:
             raise NotImplementedError
 
