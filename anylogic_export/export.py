@@ -52,8 +52,10 @@ def default_path_to_anylogic() -> Path:
     match op_sys:
         case "Windows":
             return Path("C:/Program Files/AnyLogic 8.9 Professional")
+        case "Linux":
+            return Path("/opt/AnyLogic") #! Untested, adding for CI
         case _:
-            return NotImplementedError
+            raise NotImplementedError
 
 
 def export_model(path_to_model: str, anylogic_dir: Path) -> None:
