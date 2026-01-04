@@ -23,6 +23,8 @@ dev = [
     "pytest>=8.4.2",
     "ruff>=0.11.8",
     "pre-commit>=4.2.0",
+    "pytest-cov>=7.0.0",
+    "coveralls>=4.0.2",
 ]
 
 [tool.uv.sources]
@@ -32,7 +34,10 @@ anylogic-export = { workspace = true }
 anylogic = "anylogic_export.export:app"
 
 [tool.pytest.ini_options]
-markers = ["local: requires an installation of AnyLogic and/or a license and cannot run in CI"]
+markers = [
+    "local: requires an installation of AnyLogic and/or a license and cannot run in CI",
+    "slow: takes some time to run",
+]
 testpaths = ["."]
 
 [tool.setuptools.packages.find]

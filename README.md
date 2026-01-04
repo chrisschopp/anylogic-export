@@ -1,7 +1,7 @@
+[![PyPi version](https://img.shields.io/pypi/v/anylogic-export)](https://pypi.org/project/anylogic-export/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![prek](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/j178/prek/master/docs/assets/badge-v0.json)](https://github.com/j178/prek)
-[![PyPi version](https://img.shields.io/pypi/v/anylogic-export)](https://pypi.org/project/anylogic-export/)
-
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 # anylogic-export
 
 A CLI tool for exporting AnyLogic models to standalone Java applications.

@@ -42,6 +42,7 @@ def test_bad_anylogic_path(anylogic_dir: str) -> None:
 
 
 @pytest.mark.local
+@pytest.mark.slow
 def test_export() -> None:
     """Test export after ensuring there are no exported experiment directories.
 
