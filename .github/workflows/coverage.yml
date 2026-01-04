@@ -44,6 +44,16 @@ jobs:
         run: |
           uv run coveralls --service=github
 
+  experiments:
+    runs-on: openjdk:23-slim
+
+    steps:
+      - name: Run AnyLogic experiment
+        run: |
+          chmod +x ./DistributionCenter_CustomExperiment/DistributionCenter_linux.sh # Make script executable
+          ./DistributionCenter_CustomExperiment/DistributionCenter_linux.sh # Run the experiment
+
+
   coveralls-finish:
     needs: test
     runs-on: ubuntu-latest
