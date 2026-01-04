@@ -34,7 +34,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          uv run coverage run -m pytest
+          uv run coverage run -m pytest -m "not local"
 
       - name: Upload to Coveralls
         env:
