@@ -50,6 +50,9 @@ jobs:
       image: eclipse-temurin:23-jdk-alpine
 
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Run AnyLogic experiment
         run: |
           echo "Repo location: $GITHUB_WORKSPACE"
