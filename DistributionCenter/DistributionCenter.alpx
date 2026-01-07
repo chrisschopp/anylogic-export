@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.5.202506190549"
-                   AlpVersion="8.9.5">
+                   AnyLogicVersion="8.9.7.202512010503"
+                   AlpVersion="8.9.7">
 	<Model>
 		<Id>1409238359393</Id>
 		<Name><![CDATA[DistributionCenter]]></Name>
@@ -22,6 +22,7 @@ Loading: Once the orders are completely  assembled, a truck is assigned to the l
 		<FixedTimeStep>0.001</FixedTimeStep>
 		<RelativeAccuracy>1.0E-5</RelativeAccuracy>
 		<TimeAccuracy>1.0E-5</TimeAccuracy>
+		<InspectionWindowColorTheme>DEFAULT</InspectionWindowColorTheme>
 		<Frame>
 			<Id>1372087369984</Id>
 			<Width>1200</Width>
@@ -250,5 +251,8 @@ Loading: Once the orders are completely  assembled, a truck is assigned to the l
 		<Uuid>e6625695-25a2-43d0-9056-1e9a1a594b1e</Uuid>
 		<Uuid>91990287-4edf-4e38-aa6c-66d0e906807b</Uuid>
 		<Uuid>2216cdd0-177c-5678-9e88-dd8b95312234</Uuid>
+		<Uuid>1737c8c6-b526-4dd8-589e-ee4e205b06f4</Uuid>
+		<Uuid>6a43bef6-8b70-4253-a828-82c3ab399655</Uuid>
+		<Uuid>0a27038a-0f3a-48bb-b235-4a44066a1402</Uuid>
 	</ConvertersApplied>
 </AnyLogicWorkspace>

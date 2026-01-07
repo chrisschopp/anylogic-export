@@ -32,6 +32,7 @@ engine.runFast();
 // traceln( inspectOf( root.sourceTruckToUnload ) );
 // ...
 // Destroy the model:
+traceln("Model run complete.")
 engine.stop();]]></Code>
 	</CustomExperiment>
 	<SimulationExperiment ActiveObjectClassId="1409238359395">
