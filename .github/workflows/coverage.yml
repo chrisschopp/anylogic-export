@@ -53,8 +53,9 @@ jobs:
       - name: Run AnyLogic experiment
         run: |
           echo "Repo location: $GITHUB_WORKSPACE"
-          chmod +x $GITHUB_WORKSPACE/DistributionCenter_CustomExperiment/DistributionCenter_linux.sh # Make script executable
-          $GITHUB_WORKSPACE/DistributionCenter_CustomExperiment/DistributionCenter_linux.sh # Run the experiment
+          cd ..
+          chmod +x ./DistributionCenter_CustomExperiment/DistributionCenter_linux.sh # Make script executable
+          ./DistributionCenter_CustomExperiment/DistributionCenter_linux.sh # Run the experiment
 
 
   coveralls-finish:
