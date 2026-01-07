@@ -45,7 +45,9 @@ jobs:
           uv run coveralls --service=github
 
   experiments:
-    runs-on: openjdk:23-slim
+    runs-on: ubuntu-latest
+    container:
+      image: openjdk:23-slim
 
     steps:
       - name: Run AnyLogic experiment
