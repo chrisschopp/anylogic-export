@@ -53,9 +53,9 @@ def default_path_to_anylogic() -> Path:
         case "Windows":
             return Path("C:/Program Files/AnyLogic 8.9 Professional")
         case "Linux":
-            return Path("/opt/AnyLogic") #! Untested, adding for CI
+            return Path("/opt/AnyLogic")  #! Untested, adding for CI
         case "Darwin":
-            return Path("/Applications/AnyLogic 8 Professional.app") #! Untested
+            return Path("/Applications/AnyLogic 8 Professional.app")  #! Untested
         case _:
             raise NotImplementedError
 
@@ -112,11 +112,19 @@ def remove_chrome_reference(file_path: Path) -> None:
         lines: list[str] = f.readlines()
 
     string_found = False
-    STR_TO_REMOVE = "chmod +x chromium/chromium-linux64/chrome"
+    CHROME_REF = "chmod +x chromium/chromium-linux64/chrome"
+
+    OMNIVERSE_REF = "export AL_OMNIVERSE_CONNECTOR_PATH=$(realpath $SCRIPT_DIR_XJAL/omniverse-connector/AnyLogicOmniverseConnector)"
     filtered_lines: list[str] = []
     for line in lines:
-        if STR_TO_REMOVE in line:
+        if CHROME_REF in line or OMNIVERSE_REF in line:
             string_found = True
+            filtered_lines.extend(
+                (
+                    "# commented out by anylogic-export --> ",
+                    f"# {line}",
+                )
+            )
         else:
             filtered_lines.append(line)
 
