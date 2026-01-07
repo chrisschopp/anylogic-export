@@ -55,8 +55,9 @@ jobs:
           fetch-depth: 0
       - name: Run AnyLogic experiment
         run: |
-          chmod +x github/workspace/DistributionCenter_CustomExperiment/DistributionCenter_linux.sh # Make script executable
-          github/workspace/DistributionCenter_CustomExperiment/DistributionCenter_linux.sh # Run the experiment
+          # ls -R ./DistributionCenter_CustomExperiment/DistributionCenter_linux.sh
+          # chmod +x ./DistributionCenter_CustomExperiment/DistributionCenter_linux.sh # Make script executable
+          ./DistributionCenter_CustomExperiment/DistributionCenter_linux.sh # Run the experiment
 
 
   coveralls-finish:
