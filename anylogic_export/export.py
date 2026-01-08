@@ -3,7 +3,6 @@ import logging
 import platform
 import re
 import subprocess
-from functools import partial
 from pathlib import Path
 from textwrap import dedent
 from typing import Any, Generator
@@ -12,7 +11,7 @@ import typer
 from rich.logging import RichHandler
 from typer import Argument, Option
 from typing_extensions import Annotated
-from watchfiles import Change, DefaultFilter, watch
+from watchfiles import Change, watch
 
 
 def set_verbosity(
@@ -100,8 +99,8 @@ def validated_anylogic_dir(anylogic_dir: str) -> Path:
     return path
 
 
-def remove_chrome_reference(file_path: Path) -> None:
-    """Remove a reference to `chrome` that will fail in the CI environment since
+def comment_out_lines(file_path: Path) -> None:
+    """Comment out references to Chrome and Omniverse that will fail in the CI environment since
     `chromium/` is ignored by Git. Chrome isn't needed for a headless experiment anyways.
 
     Args:
@@ -111,29 +110,28 @@ def remove_chrome_reference(file_path: Path) -> None:
     with open(file_path, "r") as f:
         lines: list[str] = f.readlines()
 
-    string_found = False
+    strings_found = 0
     CHROME_REF = "chmod +x chromium/chromium-linux64/chrome"
-
     OMNIVERSE_REF = "export AL_OMNIVERSE_CONNECTOR_PATH=$(realpath $SCRIPT_DIR_XJAL/omniverse-connector/AnyLogicOmniverseConnector)"
+
     filtered_lines: list[str] = []
     for line in lines:
         if CHROME_REF in line or OMNIVERSE_REF in line:
-            string_found = True
-            filtered_lines.extend(
-                (
-                    "# commented out by anylogic-export --> ",
-                    f"# {line}",
-                )
-            )
+            strings_found += 1
+            filtered_lines.append(f"# commented out by anylogic-export --> {line}")
         else:
             filtered_lines.append(line)
 
-    if string_found:
+    if strings_found == 2:
         with open(file_path, "w") as f:
             f.writelines(filtered_lines)
-        logger.info(f"Chrome reference removed from {file_path.parent.name}.")
+        logger.info(
+            f"Chrome/Omniverse references removed from {file_path.parent.name}."
+        )
     else:
-        logger.warning(f"Chrome reference not found in {file_path.parent.name}.")
+        logger.warning(
+            f"Chrome/Omniverse references not found in {file_path.parent.name}."
+        )
         raise typer.Exit(1)
 
 
@@ -220,7 +218,7 @@ def remove_chrome_refs_when_files_modified(
         for _ in change:
             file = Path(_[1])
             if not chrome_ref_removed[file]:
-                remove_chrome_reference(file)
+                comment_out_lines(file)
                 chrome_ref_removed[file] = True
                 for jar in get_jar_files(file):
                     if jar not in jar_paths.keys():

@@ -7,6 +7,7 @@ from pathlib import Path
 TEST_MODEL = "DistributionCenter"
 EXPERIMENTS = "CustomExperiment", "Simulation"
 
+
 @pytest.mark.local
 @pytest.mark.parametrize(
     "path_to_model",
