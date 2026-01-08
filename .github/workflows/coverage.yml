@@ -55,7 +55,7 @@ jobs:
           fetch-depth: 0
       - name: Run AnyLogic experiment
         run: |
-          ls ./DistributionCenter/_alp
+          pwd
           chmod +x ./DistributionCenter_CustomExperiment/DistributionCenter_linux.sh # Make script executable
           ./DistributionCenter_CustomExperiment/DistributionCenter_linux.sh # Run the experiment
 
