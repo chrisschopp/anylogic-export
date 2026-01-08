@@ -1,4 +1,5 @@
 import json
+import io
 import logging
 import platform
 import re
@@ -123,7 +124,7 @@ def comment_out_lines(file_path: Path) -> None:
             filtered_lines.append(line)
 
     if strings_found == 2:
-        with open(file_path, "w") as f:
+        with io.open(file_path, "w", newline="\n") as f:
             f.writelines(filtered_lines)
         logger.info(
             f"Chrome/Omniverse references removed from {file_path.parent.name}."
