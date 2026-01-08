@@ -1,5 +1,5 @@
-import json
 import io
+import json
 import logging
 import platform
 import re
@@ -188,7 +188,7 @@ def linux_script_path(model_dir: Path, experiment_dir: Path) -> Path:
     return file_path
 
 
-def remove_chrome_refs_when_files_modified(
+def comment_out_lines_when_files_modified(
     abs_path_to_model: Path, experiments: str
 ) -> None:
     """Remove the line that `chmod`s the chrome directory from the Linux scripts
@@ -427,7 +427,7 @@ def export(
     abs_path_to_model = model_path(path_to_model)
     anylogic_dir = validated_anylogic_dir(anylogic_dir)
     export_model(abs_path_to_model, anylogic_dir)
-    remove_chrome_refs_when_files_modified(abs_path_to_model, experiments)
+    comment_out_lines_when_files_modified(abs_path_to_model, experiments)
 
 
 if __name__ == "__main__":
