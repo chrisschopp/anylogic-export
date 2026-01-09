@@ -70,3 +70,9 @@ prek install
 ## Benchmarking
 
 Originally developed for one of the biggest AnyLogic models in the world. Exporting should take less time for most projects.
+
+## Bitbucket repo
+
+https://bitbucket.org/chris-schopp/anylogic-export/src/main/
+
+Used for testing Bitbucket continuous integration.
