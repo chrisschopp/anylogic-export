@@ -1,4 +1,4 @@
-image: eclipse-temurin:23-jdk-alpine
+image: openjdk:23-slim
 
 pipelines:
   default:

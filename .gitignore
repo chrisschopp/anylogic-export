@@ -54,6 +54,8 @@ build/
 
 *.swp
 
+*.autosave
+
 # Exported model folders
 DistributionCenter_*/*
 !DistributionCenter_*/*_linux.sh
