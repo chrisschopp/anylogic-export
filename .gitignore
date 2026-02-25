@@ -16,9 +16,6 @@ dist/
 # Log files
 *.log
 
-# Package files
-*.jar
-
 # Maven
 target/
 dist/
@@ -59,6 +56,7 @@ build/
 # Exported model folders
 DistributionCenter_*/*
 !DistributionCenter_*/*_linux.sh
+!DistributionCenter_*/model.jar
 
 # For testing .alp export
 SupplyChain/
