@@ -47,6 +47,22 @@ Assumes:
 anylogic export
 ```
 
+## Configuration
+
+Defaults for command-line options can be set in your project's `pyproject.toml`. The nearest `pyproject.toml` in the current directory or a parent is used.
+
+```toml
+[tool.anylogic-export]
+experiments = ["CustomExperiment", "Simulation"]
+anylogic_dir = "C:/Program Files/AnyLogic 8.9 Professional"
+
+# Optional: override for a single command
+[tool.anylogic-export.export]
+experiments = "CustomExperiment"
+```
+
+Keys are the option names (dashes or underscores). Lists are joined with commas. Command-line arguments always take precedence over `pyproject.toml`.
+
 ## Prek Quickstart
 
 Create `.pre-commit-config.yaml` in your project's root directory with the following contents:

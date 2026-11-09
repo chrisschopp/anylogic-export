@@ -4,6 +4,7 @@ import logging
 import platform
 import re
 import subprocess
+import tomllib
 from pathlib import Path
 from textwrap import dedent
 from typing import Any, Generator
@@ -15,16 +16,76 @@ from typing_extensions import Annotated
 from watchfiles import Change, watch
 
 
+def find_pyproject(start: Path | None = None) -> Path | None:
+    """Find the nearest `pyproject.toml` in `start` (default: cwd) or its parents."""
+    start = (start or Path.cwd()).resolve()
+    for directory in (start, *start.parents):
+        candidate = directory / "pyproject.toml"
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def load_config(start: Path | None = None) -> dict[str, dict[str, Any]]:
+    """Load `[tool.anylogic-export]` from pyproject.toml as a Click `default_map`.
+
+    Top-level keys apply to every command that has a matching option. Command-specific
+    tables, e.g. `[tool.anylogic-export.export]`, take precedence. Keys may use dashes
+    or underscores. Command-line arguments always override the config.
+
+    Example:
+        [tool.anylogic-export]
+        experiments = ["CustomExperiment", "Simulation"]
+        anylogic_dir = "C:/Program Files/AnyLogic 8.9 Professional"
+    """
+    pyproject = find_pyproject(start)
+    if pyproject is None:
+        return {}
+    with open(pyproject, "rb") as f:
+        try:
+            data = tomllib.load(f)
+        except tomllib.TOMLDecodeError as e:
+            raise typer.BadParameter(f"Invalid TOML in {pyproject}: {e}") from e
+    section: dict[str, Any] = data.get("tool", {}).get("anylogic-export", {})
+
+    def normalize(key: str, value: Any) -> Any:
+        if isinstance(value, list):  # e.g. experiments = ["A", "B"]
+            value = ",".join(str(v) for v in value)
+        return value
+
+    common = {
+        k.replace("-", "_"): normalize(k, v)
+        for k, v in section.items()
+        if not isinstance(v, dict)
+    }
+    default_map: dict[str, dict[str, Any]] = {}
+    for command in ("init", "init-gitignore", "init-config", "export"):
+        default_map[command] = dict(common)
+    for key, value in section.items():
+        if isinstance(value, dict):
+            command = key.replace("_", "-")
+            default_map.setdefault(command, {}).update(
+                {k.replace("-", "_"): normalize(k, v) for k, v in value.items()}
+            )
+    logger.debug(f"Loaded config from {pyproject}: {default_map}")
+    return default_map
+
+
 def set_verbosity(
+    ctx: typer.Context,
     silent: Annotated[bool, Option("--silent", "-s")] = False,
     verbose: Annotated[bool, Option("--verbose", "-v")] = False,
 ) -> None:
     """Set the logging level to display more/fewer messages.
 
+    Defaults for command options can be set in `[tool.anylogic-export]` of pyproject.toml.
+
     Args:
         silent (bool): Disable all logging except errors. Defaults to False.
         verbose (bool): Enable verbose logging. Defaults to False.
     """
+    if ctx.default_map is None:
+        ctx.default_map = load_config()
     if silent:
         if verbose:
             raise typer.BadParameter("Cannot use --silent and --verbose together.")

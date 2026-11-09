@@ -55,3 +55,32 @@ def test_export() -> None:
         ["python", "./anylogic_export/export.py", "-v", "export"],
         shell=True,
     )
+
+
+def test_load_config(tmp_path: Path) -> None:
+    (tmp_path / "pyproject.toml").write_text(
+        '[tool.anylogic-export]\n'
+        'experiments = ["A", "B"]\n'
+        'anylogic-dir = "/opt/AnyLogic"\n'
+        '[tool.anylogic-export.export]\n'
+        'experiments = "C"\n'
+    )
+    sub = tmp_path / "sub"
+    sub.mkdir()
+    cfg = export.load_config(sub)  # found in a parent directory
+    assert cfg["init"] == {"experiments": "A,B", "anylogic_dir": "/opt/AnyLogic"}
+    assert cfg["export"]["experiments"] == "C"  # command table wins
+
+
+def test_config_used_as_default(tmp_path: Path, monkeypatch) -> None:
+    from typer.testing import CliRunner
+
+    (tmp_path / "pyproject.toml").write_text(
+        '[tool.anylogic-export]\nexperiments = ["A", "B"]\n'
+    )
+    monkeypatch.chdir(tmp_path)
+    runner = CliRunner()
+    result = runner.invoke(export.app, ["init-config", "Model", "--help"])
+    assert result.exit_code == 0
+    runner.invoke(export.app, ["init-config", "Model"])
+    assert "--experiments=A,B" in (tmp_path / ".pre-commit-config.yaml").read_text()
